@@ -56,16 +56,20 @@ Therefore, since two agents are distinct if there exists some world state where 
 ---
 ##### Problem 5
 
-The information that needs to be stored for a single state with reasonably minimal memory requirements for 8-puzzle is a 3x3 char array, and for 15 puzzle is a 4x4 char array. The storage size of a single char value is 1 bytes, therefore the storage size of 3x3 char array for 8 puzzle is 9 bytes, and the storage size of 4x4 char array for 15 puzzle is 16 bytes.
+The information that needs to be stored for a single state with reasonably minimal memory requirements for 8-puzzle is a 3x3 char array, and for 15 puzzle is a 4x4 char array. The storage size of a single char value is 1 bytes, therefore the storage size of 3x3 char array for 8 puzzle is 9 bytes, and the storage size of 4x4 char array for 15 puzzle is 16 bytes. (It is possible to represent each number with 4 bits in reality, then the size will be cut into half.)
 
 The state space is the set of all states reachable from the initial state by any sequence of actions. For 8 puzzle, there are 9!/2 = 181440 reachable states; for 15 puzzle, there are 16!/2 ≈ 1.064x10<sup>13</sup> reachable states. 
 
-Combined with the calculation of reasonably minimal memory requirements,  we need 1632960 bytes to store the 8-puzzle state space and approximately 1.674x10<sup>14</sup> bytes to store the 15-puzzle state space.
+Combined with the calculation of reasonably minimal memory requirements,  we need 1632960 bytes to store the 8-puzzle state space and approximately 1.674x10<sup>14</sup> bytes to store the 15-puzzle state space. (If using 4 bits to represent each, then the size is half of these calculation.)
 
 ---
 ##### Problem 6
 
-Don't know
+Given the fact that seven out of eight corners can be independently rotated, that reduce a factor of 24 for no specific orientation of the Rubik's cube and that each cube has 3 orientations, we could calculate the total reachable state = (8! x 3<sup>8</sup>) / 24 = 3674160.
+
+Following the similar reasoning as problem 5, a tile can be represented as a char, and therefore in total 24 chars for total 24 tiles. Thus A 2D char array could use to describe the tiles, following the pre-determined order of six facets of the cubes. (In reality, we could use 5 bits to represent number 1-24, but again, there is no such data type in most of the programming language) So the state space size = 3674160 x 24 = 88179840 bytes. (Or using 5-bit representation, 55112400 bytes)
+
+Since we could rotate a tile horizontally and vertically, or not rotate it at all, then we have 2x3 + 1 = 7 states.
 
 ---
 ##### Problem 7
