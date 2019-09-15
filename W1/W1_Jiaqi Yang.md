@@ -14,10 +14,10 @@ The system was initially trained to mimic human play by attempting to match the 
 > ###### 1. "Research Blog: AlphaGo: Mastering the ancient game of Go with Machine Learning". Google Research Blog. 27 January 2016.
 > ###### 2. Silver, David; Huang, Aja; Maddison, Chris J.; Et al. (28 January 2016). "Mastering the game of Go with deep neural networks and tree search". Nature. 529 (7587): 484–489.
 > ###### 3. Metz, Cade (27 January 2016). "In Major AI Breakthrough, Google System Secretly Beats Top Player at the Ancient Game of Go". WIRED. Retrieved 1 February 2016.
->
 
 ---
 ##### Problem 2
+
 | Agent Type | Performance Measure | Environment | Actuators | Sensors |
 | :-: | :-: | :-: | :-: | :-: |
 | Shopping for used AI books on the Internet | Price, Book Quality (Customer Rate, Book Condition) | Websites for Book Rental | Programs that place the book rental order in the websites | Programs that collect the price, customer rates, and other relevant information from the book rental websites |
@@ -30,25 +30,106 @@ For the scenario of bidding on an item at an auction, the environment is represe
 ---
 ##### Problem 3
 
+Since there are S different states, and the simple reflex agents has A actions, one possible simple reflex agent can be represented by condition-action rule.
+
+> if State 1, then Action 1/2/.../A
+>
+> ......
+>
+> if State S, then Action 1/2/.../A
+
+Therefore, since two agents are distinct if there exists some world state where they take different actions, there are **A<sup>S</sup>** distinct agents.
+
 ---
 ##### Problem 4
+
+Given the facts that there are S different states, that the simple reflex agent has A actions, and that the simple reflex agent is equipped with a memory to remember the past k states, one possible simple reflex agent can be represented by condition-action rule.
+
+> if last k state is State 1, last k-1 state is State 1, ... , current state is State 1, then Action 1/2/.../A
+>
+> ......
+>
+> if last k state is State A, last k-1 state is State A, ... , current state is State A, then Action 1/2/.../A
+
+Therefore, since two agents are distinct if there exists some world state where they take different actions, there are **A<sup>S<sup> (k+1)</sup></sup>** distinct agents.
 
 ---
 ##### Problem 5
 
+The information that needs to be stored for a single state with reasonably minimal memory requirements for 8-puzzle is a 3x3 char array, and for 15 puzzle is a 4x4 char array. The storage size of a single char value is 1 bytes, therefore the storage size of 3x3 char array for 8 puzzle is 9 bytes, and the storage size of 4x4 char array for 15 puzzle is 16 bytes.
+
+The state space is the set of all states reachable from the initial state by any sequence of actions. For 8 puzzle, there are 9!/2 = 181440 reachable states; for 15 puzzle, there are 16!/2 ≈ 1.064x10<sup>13</sup> reachable states. 
+
+Combined with the calculation of reasonably minimal memory requirements,  we need 1632960 bytes to store the 8-puzzle state space and approximately 1.674x10<sup>14</sup> bytes to store the 15-puzzle state space.
+
 ---
 ##### Problem 6
+
+Don't know
 
 ---
 ##### Problem 7
 
----
+> a. Suppose the state space consists of all positions (x,y) in the plane. How many states are there? How many paths are there to the goal?
+
+Assume the number of polygonal obstacles is finite and therefore leaves free space, the number of coordinate pairs (x,y) is infinite. The state space contain all the positions (x,y) in the free space, and therefore the number of states is infinite.
+
+Assume the goal state is reachable, there will be infinite paths toward the goal state and one optimal path toward the goal state.
+
+> b. Explain briefly why the shortest path from one polygon vertex to any other in the scene must consist of straight-line segments joining some of the vertices of the polygons. Define a good state space now. How large is this state space?
+
+If there is no polygonal obstacles, the shortest path will surely be a straight line between starting point and goal. Given the fact that polygonal obstacles exist, the shortest path will then become segments of straight lines. To bypass the obstacles, the shortest way is to travel to the vertex of the polygon in the way and then try to reach goal in a straight line. If not possible, then the shortest way is to travel to next vertex of the polygon in the way and try to reach goal in a straight line again. Therefore, the shortest path from one polygon vertex to any other in the scene must consist of straight-line segments joining some of the vertices of the polygons.
+
+Given the proof that the shortest path must consist of the vertices of the polygons, we could safely ignore all the coordinate pairs (x,y) except for the coordinate pairs that represent the vertices of the polygons. In this way, we reduce the size of state space from infinite to the number of polygonal vertices in the plane as well as at least more than two paths from starting point to vertex to goal.  
+
+------
+
 ##### Problem 8
+
+> a. Breath-first search is a special case of uniform-cost search.
+
+By definition, Breadth-first search expands node in First-In-First-Out order, and Uniform-cost search expands node with lowest path cost g(n).
+
+In the special case that all step costs are equal to the same constant value, the behavior of Breadth-first search and Uniform-cost search will be the same.
+
+> b. Depth-first search is a special case of best-first tree search.
+
+By definition, Depth-first search expands node in Last-In-First-Out order, and Best-first tree search expands node with lowest heuristic path cost h(n).
+
+In the special case that the heuristic path cost h(n) equals to 1/the depth of the node, the behavior of Depth-first search and Best-first tree search will be the same.
+
+> c. Uniform-cost search is a special case of A* search.
+
+By definition, Uniform-cost search expands node with lowest path cost g(n), and A* search expands node with lowest f(n) = g(n) + h(n).
+
+In the special case that h(n) equals to 0, the node expansion logics for Uniform-cost search and A* search are both based on g(n), and therefore both of them behaves the same.
 
 ---
 ##### Problem 9
 
+![1568503488296](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1568503488296.png)
+
+A* search expands best f(n) = g(n) + h(n)
+
 ---
 ##### Problem 10
 
- 
+> a. Local beam search with k=1
+
+This will simply become Hill-climbing search since when Local beam search starts with one random state, it looks at the neighboring states and searches for the local maximum.
+
+> b. Local beam search with one initial state and no limit on the number of states retained
+
+This will simply become Breadth-first search since this algorithm looks at all the neighbors, then their neighbors, and so on.
+
+> c. Stimulated annealing with T = 0 at all times (and omitting the termination test)
+
+Since we omit the termination test, in this special case, Stimulated annealing simply becomes Hill-climbing search (Specifically, First-choice Hill-climbing search) because the search will not accept any downward successor.
+
+> d. Stimulated annealing with T = ∞ at all times
+
+Since we omit the termination test, in this special case, Stimulated annealing will accepts any successor with probability of 1 and wander downward among the nodes. This could be counted as roughly Depth-first search, or most accurately Random walk search.
+
+> e. Genetic algorithm with population size N = 1
+
+If the population size is 1, crossover will not affect the result, and therefore only left random mutation. As a result, the algorithm becomes Random walk search.
