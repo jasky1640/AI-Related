@@ -3,16 +3,19 @@
  * Author: Jiaqi Yang
  * Date: 9/23/2019
  */
-public class Puzzle{
+public abstract class Puzzle{
 
     private static final int Default_Move_Number = 100;
     private static final int Default_Maximum_Nodes_Number = 10000;
     private static final int Default_Heuristic_Version = 2;
     private static final int Default_Beam_State = 10;
 
-    protected State state = new EPState();
+    protected State state;
     protected int maxNodes = 0;
 
+    public abstract Move getMoveByName(String moveName);
+
+    //Execute command inputs
     public void executeCommand(String command){
         command = command.trim();
         //setState <state> command sets the puzzle state, like "setState b12 345 678"
@@ -29,6 +32,7 @@ public class Puzzle{
         //move <direction> command move the puzzle to a specific direction
         else if(command.matches("move ([a-z]+)")){
             System.out.println("The input movement is " + command.substring("move ".length()));
+            makeMove(getMoveByName(command.substring("move ".length())));
         }
 
         //randomizeState <n> command makes n random moves from the goal state
@@ -92,25 +96,23 @@ public class Puzzle{
         }
     }
 
+    //Set the state based the state representation of String input
     public void setState(String input){
         state.setStateList(input);
     }
 
+    //Set the state based on the input state
     public void setState(State state){
         this.state = state.copyState();
     }
 
-    public static void main(String[] args) {
-        Puzzle puzzle = new Puzzle();
-        puzzle.executeCommand("setState 345 b21 688");
-        puzzle.executeCommand("printState");
-        puzzle.executeCommand("setState 345 b21 678");
-        puzzle.executeCommand("printState");
-        puzzle.executeCommand("move up");
-        puzzle.executeCommand("randomizeState 100");
-        puzzle.executeCommand("solve beam 100");
-        puzzle.executeCommand("solve A-star h1");
-        puzzle.executeCommand("solve A-star h9");
-        puzzle.executeCommand("maxNodes 10000");
+    //Move the current puzzle state by the passing move
+    public void makeMove(Move move){
+        if(!move.isLegalMovement(state)){
+            System.out.println("The input move " + move.getMoveName() + " is not valid for the current state.");
+        }
+        else{
+            state = move.move(state);
+        }
     }
 }
