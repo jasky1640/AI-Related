@@ -1,3 +1,9 @@
+/**
+ * Solution class presents the information about a solution of the puzzle, including number of explored nodes and steps getting to goal state
+ * Author: Jiaqi Yang
+ * Date: 9/23/2019
+ */
+
 public class Solution {
 
     //The number of nodes explored to find the node with goal state

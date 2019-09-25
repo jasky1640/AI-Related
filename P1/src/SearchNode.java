@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * SearchNode class presents a A-star or local beam search tree node, including the information of g(n), h(n), moves from the start state, and the current state
+ * Author: Jiaqi Yang
+ * Date: 9/23/2019
+ */
 public class SearchNode implements Comparable<SearchNode>{
 
     private State state;
@@ -23,6 +28,14 @@ public class SearchNode implements Comparable<SearchNode>{
         this.heuristicToGoalNode = heuristicToGoalNode;
         this.movesToCurrentNode = movesToCurrentNode;
         this.costToCurrentNode = costToCurrentNode;
+    }
+
+    //Constructor for Local Beam nodes
+    public SearchNode(State state, double heuristicToGoalNode, ArrayList<Move> movesToCurrentNode){
+        this.state = state;
+        this.heuristicToGoalNode = heuristicToGoalNode;
+        this.movesToCurrentNode = movesToCurrentNode;
+        this.costToCurrentNode = 0;
     }
 
     public double getHeuristicToGoalNode() {

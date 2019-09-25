@@ -32,7 +32,11 @@ public abstract class State {
     public abstract boolean isSolvable();
 
     //Randomly move from the goal state by passing number of steps
-    public static State randomizeState(State state, ArrayList<Move> move, int numberOfSteps){
+    public static State randomizeState(State state, ArrayList<Move> move, int numberOfSteps, ArrayList<Move> movesToCurrentNode){
+        if(movesToCurrentNode == null){
+            movesToCurrentNode = new ArrayList<>();
+        }
+
         State output = state.copyState();
         Random random = new Random();
         int moveDirection;
@@ -42,6 +46,7 @@ public abstract class State {
             while (!move.get(moveDirection).isLegalMovement(output)){
                 moveDirection = random.nextInt(move.size());
             }
+            movesToCurrentNode.add(move.get(moveDirection));
             output = move.get(moveDirection).move(output);
         }
         return output;
