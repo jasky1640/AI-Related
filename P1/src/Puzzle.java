@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * Puzzle abstract class presents a puzzle, currently including Rubik Cube and 8-puzzle
@@ -13,6 +11,7 @@ public abstract class Puzzle{
     private static final int Default_Maximum_Nodes_Number = 10000;
     private static final int Default_Heuristic_Version = 2;
     private static final int Default_Beam_State = 10;
+    private static final int Maximum_Repeat_Threshold = 30;
 
     protected State state;
     protected int maxNodes = 10000;
@@ -213,8 +212,9 @@ public abstract class Puzzle{
             boolean reachGoalState = false;                                         //The boolean indicates whether goal state is found
             SearchNode goalStateSearchNode = null;                                  //The SearchNode stored the one who reach the goal state
             ArrayList<Integer> exploredNodesHash = new ArrayList<>();               //The ArrayList stores all the explored State's Hash code
-            int generation = 0;                                                     //The generation stored which generation are the current successors
-            PriorityQueue<SearchNode> exploredNodesQueue = new PriorityQueue<>();   //The list that temporarily holds the explored successors
+            int repeatedBestNode = 0;                                               //The integer stored which how many repeated best node we get
+            ArrayList<Move> moveList = getMoveList();                               //The ArrayList stores all possible movements in the puzzle
+            int generation = 0;                                                     //The integer stored the current generation of successor
 
             //Initialize the bestkNodes by generating k random states
             for(int index = 0; index < numberOfState && reachGoalState == false; index++){
@@ -231,10 +231,6 @@ public abstract class Puzzle{
                 }
 
                 SearchNode generatedSearchNode = new SearchNode(generatedState, heuristic.calculate(generatedState), movesToCurrentNode);
-                //Count the number of explored node
-                if(!exploredNodesHash.contains(generatedSearchNode.getState().getHash())){
-                    exploredNodesHash.add(generatedSearchNode.getState().getHash());
-                }
                 //If the randomly generated node is goal state, we don't need to find anymore
                 if(generatedSearchNode.getState().isGoalState()){
                     reachGoalState = true;
@@ -248,18 +244,34 @@ public abstract class Puzzle{
 
             //Loop through the entire bestkNodes list and find all successor
             //If none of them are goal state, take best k of them and put into bestkNodes
-            while(reachGoalState == false && exploredNodesHash.size() < maxNodes){
+            while(!reachGoalState && repeatedBestNode < Maximum_Repeat_Threshold){
                 //Traverse through all the searchNode in the bestkNodes list
-                for(SearchNode searchNode: bestkNodes){
+                for(int index1 = 0; index1 < bestkNodes.size() && !reachGoalState; index1++){
                     //Get all the possible move of the puzzle
-                    for(Move move: getMoveList()) {
+                    SearchNode currentNode = bestkNodes.get(index1);
+                    State currentState = currentNode.getState();
+
+                    //If the current state is explored
+                    if(exploredNodesHash.contains(currentState.getHash())){
+                        //Check the repeated best node to avoid infinite loop in the local maximum
+                        if(index1 == 0){
+                            repeatedBestNode++;
+                        }
+                    }
+                    //If the current state is not explored
+                    else{
+                        exploredNodesHash.add(currentState.getHash());
+                    }
+
+                    for(int index2 = 0; index2 < moveList.size(); index2++) {
+                        Move currentMove = moveList.get(index2);
                         //If the move is legal, then try to move it
-                        if (move.isLegalMovement(searchNode.getState())) {
-                            State movedState = move.move(searchNode.getState());
+                        if (currentMove.isLegalMovement(currentState)) {
+                            State movedState = currentMove.move(currentState);
 
                             //Update the moves leaded to the movedState
-                            ArrayList<Move> movesToMovedStateNode = searchNode.getMovesToCurrentNode();
-                            movesToMovedStateNode.add(move);
+                            ArrayList<Move> movesToMovedStateNode = currentNode.getMovesToCurrentNode();
+                            movesToMovedStateNode.add(currentMove);
                             SearchNode movedSearchNode = new SearchNode(movedState, heuristic.calculate(movedState), movesToMovedStateNode);
 
                             //If it is goal state, we don't need to find anymore
@@ -279,13 +291,15 @@ public abstract class Puzzle{
                 //We get the best k successors from priorityQueue and store them in the bestkNodes list
                 if(!reachGoalState){
                     bestkNodes.clear();
+                    Queue<SearchNode> exploredQueue = new LinkedList<>();  //This queue temporarily holds the explored searchNodes
+
                     int bestCount = 0;
                     //When we haven't find k best nodes
                     while(bestCount < numberOfState){
                         SearchNode currentBest = priorityQueue.poll();
                         //If the priorityQueue is empty
                         if(currentBest == null){
-                            SearchNode repeatedBest = exploredNodesQueue.poll();
+                            SearchNode repeatedBest = exploredQueue.poll();
                             //If even repeated List is empty
                             if(repeatedBest == null) {
                                 break;
@@ -301,7 +315,7 @@ public abstract class Puzzle{
                         else {
                             //If the state is explored before, we put it into the repeated list
                             if (exploredNodesHash.contains(currentBest.getState().getHash())) {
-                                exploredNodesQueue.add(currentBest);
+                                exploredQueue.add(currentBest);
                             }
                             //If not explored before
                             else {
@@ -315,18 +329,15 @@ public abstract class Puzzle{
                     }
                     //Clear the priority queues after finding best k nodes
                     priorityQueue.clear();
-                    exploredNodesQueue.clear();
-
-                    //Print out the generation information
-                    generation++;
-                    System.out.println("This is " + generation + "th generation of successors.");
                 }
+                generation++;
             }//end of the while loop
 
             //If there is no goal state search node found, then return failure Solution
             if(goalStateSearchNode == null){
-                System.out.println("The puzzle is unable to be solved within " + maxNodes + " node consideration limitation. Try again by increasing the threshold");
-                return new Solution(exploredNodesHash.size(), -1);
+                System.out.println("Unable to solve after searching" + generation * numberOfState + " nodes.");
+                System.out.println("The local maximum is met repeatedly for " + repeatedBestNode + " times.");
+                return new Solution(generation * numberOfState, -1);
             }
 
             //Backtrace the SearchNode that reaches the goal state and print the path it takes from the starting state
@@ -353,9 +364,10 @@ public abstract class Puzzle{
                     }
                 }
                 sb.append("]");
-                System.out.println("We reach goal state with " + goalMoveList.size() + " steps");
+                System.out.println("We reach goal state after searching " + generation * numberOfState + " nodes.");
+                System.out.println("We can get to the goal state by moving blank tile " + goalStateSearchNode.getMovesToCurrentNode().size() + " times.");
                 System.out.println(sb.toString());
-                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), exploredNodesHash.size());
+                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), generation * numberOfState);
             }
         }
     }
