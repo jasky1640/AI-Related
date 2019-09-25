@@ -38,7 +38,7 @@ public abstract class State {
         }
 
         State output = state.copyState();
-        Random random = new Random();
+        Random random = new Random(1);
         int moveDirection;
         //Randomly move from the goal state for numberOfSteps times
         for(int index = 0; index < numberOfSteps; index++){
