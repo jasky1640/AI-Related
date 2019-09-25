@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+
 /**
  * Puzzle abstract class presents a puzzle, currently including Rubik Cube and 8-puzzle
  * Author: Jiaqi Yang
@@ -11,9 +15,17 @@ public abstract class Puzzle{
     private static final int Default_Beam_State = 10;
 
     protected State state;
-    protected int maxNodes = 0;
+    protected int maxNodes = 10000;
 
+    //Get the corresponding Move represented by String moveName
     public abstract Move getMoveByName(String moveName);
+
+    //Get the corresponding Heuristic represented by version number
+    public abstract Heuristic getHeuristicByName(int heuristicVersion);
+
+    public abstract ArrayList<Move> getMoveList();
+    public abstract HashMap<String, Move> getMoveMap();
+    public abstract HashMap<Integer, Heuristic> getHeuristicMap();
 
     //Execute command inputs
     public void executeCommand(String command){
@@ -45,7 +57,8 @@ public abstract class Puzzle{
                 System.out.println("The input random move number is invalid. Set to default value 100");
                 moveNumber = Default_Move_Number;
             }
-            //RandomizeState method
+            state.setGoalState();
+            state = State.randomizeState(state, getMoveList(), moveNumber);
         }
 
         //maxNodes <n> specifies the maximum number of nodes to be considered during a search.
@@ -64,7 +77,7 @@ public abstract class Puzzle{
 
         //solve A-star <heuristic> solves the puzzle from its current state using A-star search using heuristic equal to “h1”or “h2”
         else if(command.matches("solve A-star h([12])")){
-            System.out.println("Solve the puzzle with A-star and heuristic function " + command.substring("solve A-star h".length()));
+            System.out.println("Solve the puzzle with A-star and heuristic function h" + command.substring("solve A-star h".length()));
             Integer heuristicVersion;
             try{
                 heuristicVersion = Integer.parseInt(command.substring("solve A-star h".length()));
@@ -73,12 +86,12 @@ public abstract class Puzzle{
                 System.out.println("The input heuristic version is invalid. Set to default value h2");
                 heuristicVersion = Default_Heuristic_Version;
             }
-            //Solve A-star Method
+            solveAStar(getHeuristicByName(heuristicVersion));
         }
 
         //solve beam <k> solves the puzzle from its current state by adapting local beam search with k states.
-        else if(command.matches("solve beam [\\d+]")){
-            System.out.println("Solve the puzzle with local beam search with state number" + command.substring("solve beam ".length()));
+        else if(command.matches("solve beam (\\d+)")){
+            System.out.println("Solve the puzzle with local beam search with state number " + command.substring("solve beam ".length()));
             Integer beamNumber;
             try{
                 beamNumber = Integer.parseInt(command.substring("solve beam ".length()));
@@ -92,7 +105,97 @@ public abstract class Puzzle{
 
         //Invalid Command
         else{
-            System.out.println("The input command" + command + " is not valid.");
+            System.out.println("The input command " + command + " is not valid.");
+        }
+    }
+
+    //Solve the puzzle from its current state using A-star search with indicated heuristic
+    public Solution solveAStar (Heuristic heuristic){
+        if(!state.isSolvable()){
+            System.out.println("The current state is unsolvable. Please generate a solvable state randomizing from goal state");
+            return new Solution(0, -1);
+        }
+
+        else{
+            ArrayList<Integer> exploredNodesHash = new ArrayList<>();                   //The ArrayList stores all the explored State's Hash code
+            boolean reachGoalState = false;                                             //The boolean indicates whether goal state is found
+            SearchNode goalStateSearchNode = null;                                      //The SearchNode stored the one who reach the goal state
+            PriorityQueue<SearchNode> priorityQueue = new PriorityQueue<>();            //The PriorityQueue stored all the unexplored SearchNode in the order of f(n) = g(n) + h(n)
+
+            //Add the starting point as a SearchNode into the priorityQueue
+            priorityQueue.add(new SearchNode(state, heuristic.calculate(state)));
+
+            //Loop until the goal state is found or the number of explored SearchNode is more than the preset threshold
+            while(reachGoalState == false && exploredNodesHash.size() < maxNodes){
+                //Get the next unexplored node in the priority queue and mark it as explored
+                SearchNode searchNode = priorityQueue.poll();
+                while(exploredNodesHash.contains(searchNode.getState().getHash())){
+                    searchNode = priorityQueue.poll();
+                    if(searchNode == null){
+                        System.out.println("The priority queue is empty. The puzzle is unable to be solved.");
+                        return new Solution(exploredNodesHash.size(), -1);
+                    }
+                }
+                exploredNodesHash.add(searchNode.getState().getHash());
+
+                //If the searched state is the goal state, exit the loop
+                if(searchNode.getState().isGoalState()){
+                    goalStateSearchNode = searchNode;
+                    reachGoalState = true;
+                }
+                //If it isn't the goal state, keep moving
+                else{
+                    //For all possible moves of the puzzle
+                    for(Move move: getMoveList()){
+                        //If the move is legal, then try to move it
+                        if(move.isLegalMovement(searchNode.getState())){
+                            State movedState = move.move(searchNode.getState());
+                            //If the moved state is explored, drop it
+                            if(!exploredNodesHash.contains(movedState.getHash())){
+                                //Update the moves leaded to the movedState
+                                ArrayList<Move> movesToMovedStateNode = searchNode.getMovesToCurrentNode();
+                                movesToMovedStateNode.add(move);
+                                priorityQueue.add(new SearchNode(movedState, heuristic.calculate(movedState), movesToMovedStateNode, searchNode.getCostToCurrentNode() + 1));
+                            }
+                        }
+                    } //The end of for loop
+                } //The end of else clause
+            } //The end of while loop
+
+            //If there is no goal state search node found, then return failure Solution
+            if(goalStateSearchNode == null){
+                System.out.println("The puzzle is unable to be solved within " + maxNodes + " node consideration limitation. Try again by increasing the threshold");
+                return new Solution(exploredNodesHash.size(), -1);
+            }
+
+            //Backtrace the SearchNode that reaches the goal state and print the path it takes from the starting state
+            else{
+                ArrayList<Move> goalMoveList = goalStateSearchNode.getMovesToCurrentNode();
+
+                //Print the starting state and set up StringBuilder
+                StringBuilder sb = new StringBuilder();
+                sb.append("[");
+                System.out.print("The State starting with: ");
+                State nextState =state.copyState();
+                nextState.printState();
+
+                //Go through all the moves leading to the goal state from the beginning
+                for(int index = 0; index < goalMoveList.size(); index++){
+                    nextState = goalMoveList.get(index).move(nextState);
+
+                    //Print the middle-way state and work on StringBuilder
+                    System.out.print("The next step is to move " + goalMoveList.get(index).getMoveName() + ". ");
+                    nextState.printState();
+                    sb.append(goalMoveList.get(index).getMoveName());
+                    if(index != goalMoveList.size() - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                System.out.println("We reach goal state with " + goalMoveList.size() + " steps");
+                System.out.println(sb.toString());
+                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), exploredNodesHash.size());
+            }
         }
     }
 

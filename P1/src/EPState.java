@@ -30,7 +30,7 @@ public class EPState extends State{
     }
 
     public ArrayList<Integer> getStateList() {
-        return stateList;
+        return new ArrayList<>(stateList);
     }
 
     //Get a new instance of EPState
@@ -125,38 +125,25 @@ public class EPState extends State{
         return stateList.hashCode();
     }
 
-    //Shortcut to rapidly test the normal case of the methods
-    public static void main(String[] args) {
-        EPState state = new EPState();
-
-        //Test setEPGoalState method
-        state.setGoalState();
-
-        //Test printEPState method
-        state.printState();
-
-        //Test isGoalState method
-        System.out.print("IsGoalState:");
-        System.out.println(state.isGoalState());
-
-        //Test isValidEPState and setStateList method
-        System.out.print("0123456789 is valid:");
-        System.out.println(state.isValidState("0123456789"));
-        state.setStateList("0123456789");
-        state.printState();
-
-        System.out.print("blank is valid:");
-        System.out.println(state.isValidState(""));
-        state.setStateList("");
-        state.printState();
-
-        System.out.print("012345687 is valid:");
-        System.out.println(state.isValidState("012345687"));
-        state.setStateList("012345687");
-        state.printState();
-
-        //Test isGoalState method
-        System.out.print("IsGoalState:");
-        System.out.println(state.isGoalState());
+    //Reference: https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/
+    //It is impossible to solve an instance of 8 puzzle if number of inversions is odd in the input state
+    //Where an inversion is when a tile precedes another tile with a lower number on it
+    @Override
+    public boolean isSolvable(){
+        int sumOfInversion = 0;
+        //Traverse the entire 8-puzzle list
+        for(int index1 = 0; index1 < stateList.size() - 1; index1++){
+            //If not blank tile
+            if(stateList.get(index1) != 0){
+                //Traverse the rest of the list to find the count of inversion tile
+                for(int index2 = index1 + 1; index2 < stateList.size(); index2++){
+                    //If it is an inversion
+                    if(stateList.get(index2) != 0 && stateList.get(index1) > stateList.get(index2)){
+                        sumOfInversion++;
+                    }
+                }
+            }
+        }
+        return sumOfInversion % 2 == 0;
     }
 }

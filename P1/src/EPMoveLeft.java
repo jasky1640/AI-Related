@@ -40,24 +40,4 @@ public class EPMoveLeft implements Move{
     public boolean isLegalMovement(State state) {
         return ((EPState)state).getStateList().indexOf(0) % 3 != 0;
     }
-
-    //Shortcut to rapidly test the normal case of the methods
-    public static void main(String[] args) {
-        EPState state_error = new EPState();
-        EPState state_column_1 = new EPState("123405678");
-        EPState state_column_2 = new EPState("120345678");
-
-        //Test isLegalMovement method
-        EPMoveLeft epMoveLeft = new EPMoveLeft();
-        state_error.printState();
-        System.out.println(epMoveLeft.isLegalMovement(state_error));
-        state_column_1.printState();
-        System.out.println(epMoveLeft.isLegalMovement(state_column_1));
-        state_column_2.printState();
-        System.out.println(epMoveLeft.isLegalMovement(state_column_2));
-
-        //Test move method
-        (epMoveLeft.move(state_column_1)).printState();
-        (epMoveLeft.move(state_column_2)).printState();
-    }
 }

@@ -36,23 +36,4 @@ public class EPMisplacedHeuristic implements Heuristic{
     public String getName() {
         return EP_Misplaced_Heuristic_Name;
     }
-
-    //Shortcut to rapidly test the normal case of the methods
-    public static void main(String[] args) {
-        EPState state_goal = new EPState();
-        EPState state_missing_one = new EPState("812345670");
-        EPState state_missing_two = new EPState("012345687");
-        EPState state_missing_three = new EPState("813245670");
-        EPState state_missing_four = new EPState("012354687");
-        EPState state_missing_eight = new EPState("724506831");
-
-        EPMisplacedHeuristic epMisplacedHeuristic = new EPMisplacedHeuristic();
-        System.out.println(epMisplacedHeuristic.getName());
-        System.out.println(epMisplacedHeuristic.calculate(state_goal));
-        System.out.println(epMisplacedHeuristic.calculate(state_missing_one));
-        System.out.println(epMisplacedHeuristic.calculate(state_missing_two));
-        System.out.println(epMisplacedHeuristic.calculate(state_missing_three));
-        System.out.println(epMisplacedHeuristic.calculate(state_missing_four));
-        System.out.println(epMisplacedHeuristic.calculate(state_missing_eight));
-    }
 }

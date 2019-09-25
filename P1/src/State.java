@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * State abstract class represents a state for a puzzle
  * Author: Jiaqi Yang
@@ -24,4 +27,23 @@ public abstract class State {
 
     //Get a new instance of State
     public abstract State copyState();
+
+    //Validate if the current state is solvable
+    public abstract boolean isSolvable();
+
+    //Randomly move from the goal state by passing number of steps
+    public static State randomizeState(State state, ArrayList<Move> move, int numberOfSteps){
+        State output = state.copyState();
+        Random random = new Random();
+        int moveDirection;
+        //Randomly move from the goal state for numberOfSteps times
+        for(int index = 0; index < numberOfSteps; index++){
+            moveDirection = random.nextInt(move.size());
+            while (!move.get(moveDirection).isLegalMovement(output)){
+                moveDirection = random.nextInt(move.size());
+            }
+            output = move.get(moveDirection).move(output);
+        }
+        return output;
+    }
 }
