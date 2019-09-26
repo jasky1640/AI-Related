@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * EPState class represents a 8-puzzle state in the form of an ArrayList
@@ -145,5 +146,49 @@ public class EPState extends State{
             }
         }
         return sumOfInversion % 2 == 0;
+    }
+
+    //For the experiment part, the method return all solvable state for 8-puzzle
+    public static ArrayList<State> getAllSolvableStates(){
+        ArrayList<Integer> stateList = new ArrayList<>();
+        stateList.add(0);
+        stateList.add(1);
+        stateList.add(2);
+        stateList.add(3);
+        stateList.add(4);
+        stateList.add(5);
+        stateList.add(6);
+        stateList.add(7);
+        stateList.add(8);
+        ArrayList<ArrayList<Integer>> allStates = generatePermutation(stateList);
+        ArrayList<State> allSolvableStates = new ArrayList<>();
+
+        for(ArrayList<Integer> arrayList: allStates){
+            EPState epState = new EPState(arrayList);
+            if(epState.isSolvable()){
+                allSolvableStates.add(epState);
+            }
+        }
+
+        return allSolvableStates;
+    }
+
+    //Generate permutation for input arrayList
+    public static ArrayList<ArrayList<Integer>> generatePermutation(ArrayList<Integer> arrayList){
+        ArrayList<ArrayList<Integer>> output = new ArrayList<>();
+        getPermutation(arrayList, 0, output);
+        return output;
+    }
+
+    //Permutation algorithm from https://stackoverflow.com/questions/2920315/permutation-of-array
+    public static void getPermutation(ArrayList<Integer> arrayList, int k, ArrayList<ArrayList<Integer>> output){
+        for(int i = k; i < arrayList.size(); i++){
+            Collections.swap(arrayList, i, k);
+            getPermutation(arrayList, k + 1, output);
+            Collections.swap(arrayList, k, i);
+            if(k == arrayList.size() - 1){
+                output.add(new ArrayList<>(arrayList));
+            }
+        }
     }
 }
