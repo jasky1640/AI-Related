@@ -214,7 +214,7 @@ public abstract class Puzzle{
                     System.out.println("We explored " + exploredNodesHash.size() + " nodes");
                     System.out.println(sb.toString());
                 }
-                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), exploredNodesHash.size());
+                return new Solution(exploredNodesHash.size(), goalStateSearchNode.getMovesToCurrentNode().size());
             }
         }
     }
@@ -398,8 +398,7 @@ public abstract class Puzzle{
                     System.out.println("We can get to the goal state by moving blank tile " + goalStateSearchNode.getMovesToCurrentNode().size() + " times.");
                     System.out.println(sb.toString());
                 }
-                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), exploredNodesHash.size());
-            }
+                return new Solution(exploredNodesHash.size(), goalStateSearchNode.getMovesToCurrentNode().size());            }
         }
     }
 

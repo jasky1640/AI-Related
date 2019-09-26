@@ -132,6 +132,8 @@ Solution class presents the information about a solution of the puzzle, includin
 
 #### 2. Code Correctness
 
+###### The only main method in the program is in the EPState class. To run the program, please run the main method and pass the file name as the only argument.
+
 The following instructions are in the file named SimpleTestFile.txt within my submitted zip file.
 
 > ```
@@ -406,6 +408,32 @@ Before diving into the experiments and discussion sections, I would like to pres
 > local beam search (k = 50): Solved: 45005, Solvable fraction: 24.80%, Time consumed: 212110, Average path length: 382, Average node explored: 23
 > local beam search (k = 100): Solved: 10225, Solvable fraction: 5.64%, Time consumed: 293340, Average path length: 365, Average node explored: 18
 > -------------------------------------------------------------------------------------
+> MaxNodes: 1000
+> h1: Solved: 19020, Solvable fraction: 10.48%, Time consumed: 480724, Average path length: 539, Average node explored: 15
+> h2: Solved: 113043, Solvable fraction: 62.30%, Time consumed: 292001, Average path length: 442, Average node explored: 20
+> local beam search (k = 2): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 41277, Average path length: 167, Average node explored: 89
+> local beam search (k = 3): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 47926, Average path length: 192, Average node explored: 72
+> local beam search (k = 5): Solved: 181409, Solvable fraction: 99.98%, Time consumed: 64176, Average path length: 237, Average node explored: 58
+> local beam search (k = 10): Solved: 181359, Solvable fraction: 99.96%, Time consumed: 86139, Average path length: 293, Average node explored: 42
+> local beam search (k = 20): Solved: 181112, Solvable fraction: 99.82%, Time consumed: 141551, Average path length: 401, Average node explored: 34
+> local beam search (k = 30): Solved: 179536, Solvable fraction: 98.95%, Time consumed: 207191, Average path length: 493, Average node explored: 31
+> local beam search (k = 50): Solved: 163654, Solvable fraction: 90.20%, Time consumed: 348913, Average path length: 623, Average node explored: 28
+> local beam search (k = 100): Solved: 86819, Solvable fraction: 47.85%, Time consumed: 634820, Average path length: 742, Average node explored: 24
+> -------------------------------------------------------------------------------------
+> MaxNodes: 5000
+> h1: Solved: 66785, Solvable fraction: 36.81%, Time consumed: 10569355, Average path length: 2200, Average node explored: 18
+> h2: Solved: 177702, Solvable fraction: 97.94%, Time consumed: 1431587, Average path length: 1051, Average node explored: 21
+> local beam search (k = 2): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 41092, Average path length: 167, Average node explored: 89
+> local beam search (k = 3): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 47890, Average path length: 192, Average node explored: 72
+> local beam search (k = 5): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 63994, Average path length: 237, Average node explored: 58
+> local beam search (k = 10): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 85540, Average path length: 294, Average node explored: 42
+> local beam search (k = 20): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 140737, Average path length: 401, Average node explored: 34
+> local beam search (k = 30): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 206896, Average path length: 500, Average node explored: 31
+> local beam search (k = 50): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 360174, Average path length: 673, Average node explored: 29
+> local beam search (k = 100): Solved: 181440, Solvable fraction: 100.00%, Time consumed: 839851, Average path length: 1034, Average node explored: 27
+> -------------------------------------------------------------------------------------
+> MaxNodes: 10000
+> 
 > ```
 
 
