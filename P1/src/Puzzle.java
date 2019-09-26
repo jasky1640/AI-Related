@@ -85,7 +85,7 @@ public abstract class Puzzle{
                 System.out.println("The input heuristic version is invalid. Set to default value h2");
                 heuristicVersion = Default_Heuristic_Version;
             }
-            solveAStar(getHeuristicByName(heuristicVersion));
+            solveAStar(getHeuristicByName(heuristicVersion), true);
         }
 
         //solve beam <k> solves the puzzle from its current state by adapting local beam search with k states.
@@ -99,7 +99,7 @@ public abstract class Puzzle{
                 System.out.println("The input local beam state is invalid. Set to default value 10");
                 beamNumber = Default_Beam_State;
             }
-            solveBeam(beamNumber);
+            solveBeam(beamNumber, true);
         }
 
         //Invalid Command
@@ -109,9 +109,11 @@ public abstract class Puzzle{
     }
 
     //Solve the puzzle from its current state using A-star search with indicated heuristic
-    public Solution solveAStar (Heuristic heuristic){
+    public Solution solveAStar (Heuristic heuristic, boolean shouldPrint){
         if(!state.isSolvable()){
-            System.out.println("The current state is unsolvable. Please generate a solvable state randomizing from goal state");
+            if(shouldPrint) {
+                System.out.println("The current state is unsolvable. Please generate a solvable state randomizing from goal state");
+            }
             return new Solution(0, -1);
         }
 
@@ -131,7 +133,9 @@ public abstract class Puzzle{
                 while(exploredNodesHash.contains(searchNode.getState().getHash())){
                     searchNode = priorityQueue.poll();
                     if(searchNode == null){
-                        System.out.println("The priority queue is empty. The puzzle is unable to be solved.");
+                        if(shouldPrint) {
+                            System.out.println("The priority queue is empty. The puzzle is unable to be solved.");
+                        }
                         return new Solution(exploredNodesHash.size(), -1);
                     }
                 }
@@ -163,7 +167,9 @@ public abstract class Puzzle{
 
             //If there is no goal state search node found, then return failure Solution
             if(goalStateSearchNode == null){
-                System.out.println("The puzzle is unable to be solved within " + maxNodes + " node consideration limitation. Try again by increasing the threshold");
+                if(shouldPrint) {
+                    System.out.println("The puzzle is unable to be solved within " + maxNodes + " node consideration limitation. Try again by increasing the threshold");
+                }
                 return new Solution(exploredNodesHash.size(), -1);
             }
 
@@ -174,7 +180,9 @@ public abstract class Puzzle{
                 //Print the starting state and set up StringBuilder
                 StringBuilder sb = new StringBuilder();
                 sb.append("[");
-                System.out.print("The State starting with: ");
+                if(shouldPrint) {
+                    System.out.print("The State starting with: ");
+                }
                 State nextState =state.copyState();
                 nextState.printState();
 
@@ -182,8 +190,10 @@ public abstract class Puzzle{
                 for(int index = 0; index < goalMoveList.size(); index++){
                     nextState = goalMoveList.get(index).move(nextState);
 
-                    //Print the middle-way state and work on StringBuilder
-                    System.out.print("The next step is to move " + goalMoveList.get(index).getMoveName() + ". ");
+                    if(shouldPrint) {
+                        //Print the middle-way state and work on StringBuilder
+                        System.out.print("The next step is to move " + goalMoveList.get(index).getMoveName() + ". ");
+                    }
                     nextState.printState();
                     sb.append(goalMoveList.get(index).getMoveName());
                     if(index != goalMoveList.size() - 1){
@@ -191,17 +201,21 @@ public abstract class Puzzle{
                     }
                 }
                 sb.append("]");
-                System.out.println("We reach goal state with " + goalMoveList.size() + " steps");
-                System.out.println(sb.toString());
+                if(shouldPrint) {
+                    System.out.println("We reach goal state with " + goalMoveList.size() + " steps");
+                    System.out.println(sb.toString());
+                }
                 return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), exploredNodesHash.size());
             }
         }
     }
 
     //Solve the puzzle from its current state by adapting local beam search with input amount of states
-    public Solution solveBeam(int numberOfState){
+    public Solution solveBeam(int numberOfState, boolean shouldPrint){
         if(!state.isSolvable()){
-            System.out.println("The current state is unsolvable. Please generate a solvable state randomizing from goal state");
+            if(shouldPrint) {
+                System.out.println("The current state is unsolvable. Please generate a solvable state randomizing from goal state");
+            }
             return new Solution(0, -1);
         }
 
@@ -244,7 +258,7 @@ public abstract class Puzzle{
 
             //Loop through the entire bestkNodes list and find all successor
             //If none of them are goal state, take best k of them and put into bestkNodes
-            while(!reachGoalState && repeatedBestNode < Maximum_Repeat_Threshold){
+            while(!reachGoalState && exploredNodesHash.size() < maxNodes ){
                 //Traverse through all the searchNode in the bestkNodes list
                 for(int index1 = 0; index1 < bestkNodes.size() && !reachGoalState; index1++){
                     //Get all the possible move of the puzzle
@@ -335,9 +349,11 @@ public abstract class Puzzle{
 
             //If there is no goal state search node found, then return failure Solution
             if(goalStateSearchNode == null){
-                System.out.println("Unable to solve after searching" + generation * numberOfState + " nodes.");
-                System.out.println("The local maximum is met repeatedly for " + repeatedBestNode + " times.");
-                return new Solution(generation * numberOfState, -1);
+                if(shouldPrint) {
+                    System.out.println("Unable to solve after searching" + exploredNodesHash.size() + " nodes.");
+                    System.out.println("The local maximum is met repeatedly for " + repeatedBestNode + " times.");
+                }
+                return new Solution(exploredNodesHash.size(), -1);
             }
 
             //Backtrace the SearchNode that reaches the goal state and print the path it takes from the starting state
@@ -347,7 +363,9 @@ public abstract class Puzzle{
                 //Print the starting state and set up StringBuilder
                 StringBuilder sb = new StringBuilder();
                 sb.append("[");
-                System.out.print("The State starting with: ");
+                if(shouldPrint) {
+                    System.out.print("The State starting with: ");
+                }
                 State nextState =state.copyState();
                 nextState.printState();
 
@@ -355,8 +373,10 @@ public abstract class Puzzle{
                 for(int index = 0; index < goalMoveList.size(); index++){
                     nextState = goalMoveList.get(index).move(nextState);
 
-                    //Print the middle-way state and work on StringBuilder
-                    System.out.print("The next step is to move " + goalMoveList.get(index).getMoveName() + ". ");
+                    if(shouldPrint) {
+                        //Print the middle-way state and work on StringBuilder
+                        System.out.print("The next step is to move " + goalMoveList.get(index).getMoveName() + ". ");
+                    }
                     nextState.printState();
                     sb.append(goalMoveList.get(index).getMoveName());
                     if(index != goalMoveList.size() - 1){
@@ -364,10 +384,12 @@ public abstract class Puzzle{
                     }
                 }
                 sb.append("]");
-                System.out.println("We reach goal state after searching " + generation * numberOfState + " nodes.");
-                System.out.println("We can get to the goal state by moving blank tile " + goalStateSearchNode.getMovesToCurrentNode().size() + " times.");
-                System.out.println(sb.toString());
-                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), generation * numberOfState);
+                if(shouldPrint) {
+                    System.out.println("We reach goal state after searching " + exploredNodesHash.size() + " nodes.");
+                    System.out.println("We can get to the goal state by moving blank tile " + goalStateSearchNode.getMovesToCurrentNode().size() + " times.");
+                    System.out.println(sb.toString());
+                }
+                return new Solution(goalStateSearchNode.getMovesToCurrentNode().size(), exploredNodesHash.size());
             }
         }
     }
