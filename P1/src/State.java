@@ -51,4 +51,25 @@ public abstract class State {
         }
         return output;
     }
+
+    //Implementation for local beam search
+    public static State randomizeBeamState(State state, ArrayList<Move> move, int numberOfSteps, ArrayList<Move> movesToCurrentNode){
+        if(movesToCurrentNode == null){
+            movesToCurrentNode = new ArrayList<>();
+        }
+
+        State output = state.copyState();
+        Random random = new Random();
+        int moveDirection;
+        //Randomly move from the goal state for numberOfSteps times
+        for(int index = 0; index < numberOfSteps; index++){
+            moveDirection = random.nextInt(move.size());
+            while (!move.get(moveDirection).isLegalMovement(output)){
+                moveDirection = random.nextInt(move.size());
+            }
+            movesToCurrentNode.add(move.get(moveDirection));
+            output = move.get(moveDirection).move(output);
+        }
+        return output;
+    }
 }

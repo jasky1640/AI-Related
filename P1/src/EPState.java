@@ -9,6 +9,7 @@ import java.util.Collections;
  */
 public class EPState extends State{
 
+    public static final double Number_Of_Solvable_States = 181440;
     //The representation of a 8-puzzle state
     private ArrayList<Integer> stateList = new ArrayList<>();
 
@@ -174,14 +175,14 @@ public class EPState extends State{
     }
 
     //Generate permutation for input arrayList
-    public static ArrayList<ArrayList<Integer>> generatePermutation(ArrayList<Integer> arrayList){
+    private static ArrayList<ArrayList<Integer>> generatePermutation(ArrayList<Integer> arrayList){
         ArrayList<ArrayList<Integer>> output = new ArrayList<>();
         getPermutation(arrayList, 0, output);
         return output;
     }
 
     //Permutation algorithm from https://stackoverflow.com/questions/2920315/permutation-of-array
-    public static void getPermutation(ArrayList<Integer> arrayList, int k, ArrayList<ArrayList<Integer>> output){
+    private static void getPermutation(ArrayList<Integer> arrayList, int k, ArrayList<ArrayList<Integer>> output){
         for(int i = k; i < arrayList.size(); i++){
             Collections.swap(arrayList, i, k);
             getPermutation(arrayList, k + 1, output);

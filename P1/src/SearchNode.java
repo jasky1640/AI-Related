@@ -9,9 +9,9 @@ public class SearchNode implements Comparable<SearchNode>{
 
     private State state;
     private ArrayList<Move> movesToCurrentNode;
-    //g(n)
+    //h(n)
     private double heuristicToGoalNode;
-    //Not used in beam search, h(n)
+    //Not used in beam search, g(n)
     private int costToCurrentNode;
 
     //Constructor for the starting node

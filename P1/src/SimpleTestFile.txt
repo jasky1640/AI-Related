@@ -1,5 +1,6 @@
 setState b12 345 678
 printState
+maxNodes 1000
 move right
 printState
 randomizeState 2
@@ -8,3 +9,6 @@ solve A-star h1
 randomizeState 10
 printState
 solve A-star h2
+randomizeState 100
+printState
+solve beam 30

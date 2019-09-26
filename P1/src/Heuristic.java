@@ -1,5 +1,5 @@
 /**
- * EPDistanceHeuristic interface provides the functionality of calculating the heuristic value of a given state
+ * Heuristic interface provides the functionality of calculating the heuristic value of a given state
  * Author: Jiaqi Yang
  * Date: 9/23/2019
  */
