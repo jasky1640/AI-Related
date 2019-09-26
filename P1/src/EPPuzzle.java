@@ -166,6 +166,96 @@ public class EPPuzzle extends Puzzle {
             sb_h2.append("Solved: " + solved + ", Solvable fraction: " + String.format("%.2f", (solved / EPState.Number_Of_Solvable_States) * 100) + "%, Time consumed: " + timeConsumed + ", Average path length: " + averageLength + ", Average node explored: " + averageNodeExplored);
             System.out.println(sb_h2.toString());
 
+            //Local beam search k = 2 part
+            currentSolution.clear();
+            solved = 0;
+            sumOfLength = 0;
+            sumOfNodeExplored = 0;
+            StringBuilder sb_lb9 = new StringBuilder();
+            sb_lb9.append("local beam search (k = 2): ");
+            startTime = System.currentTimeMillis();
+            for (State currentState : solvables) {
+                setState(currentState);
+                currentSolution.add(solveBeam(2, false));
+            }
+            timeConsumed = System.currentTimeMillis() - startTime;
+            for (Solution solution : currentSolution) {
+                if (solution.getStepsToGoal() != -1) {
+                    solved++;
+                    sumOfLength += solution.getStepsToGoal();
+                    sumOfNodeExplored += solution.getNodesExplored();
+                }
+            }
+            if (solved != 0) {
+                averageLength = sumOfLength / solved;
+                averageNodeExplored = sumOfNodeExplored / solved;
+            } else {
+                averageLength = -1;
+                averageNodeExplored = -1;
+            }
+            sb_lb9.append("Solved: " + solved + ", Solvable fraction: " + String.format("%.2f", (solved / EPState.Number_Of_Solvable_States) * 100) + "%, Time consumed: " + timeConsumed + ", Average path length: " + averageLength + ", Average node explored: " + averageNodeExplored);
+            System.out.println(sb_lb9.toString());
+
+            //Local beam search k = 3 part
+            currentSolution.clear();
+            solved = 0;
+            sumOfLength = 0;
+            sumOfNodeExplored = 0;
+            StringBuilder sb_lb8 = new StringBuilder();
+            sb_lb8.append("local beam search (k = 3): ");
+            startTime = System.currentTimeMillis();
+            for (State currentState : solvables) {
+                setState(currentState);
+                currentSolution.add(solveBeam(3, false));
+            }
+            timeConsumed = System.currentTimeMillis() - startTime;
+            for (Solution solution : currentSolution) {
+                if (solution.getStepsToGoal() != -1) {
+                    solved++;
+                    sumOfLength += solution.getStepsToGoal();
+                    sumOfNodeExplored += solution.getNodesExplored();
+                }
+            }
+            if (solved != 0) {
+                averageLength = sumOfLength / solved;
+                averageNodeExplored = sumOfNodeExplored / solved;
+            } else {
+                averageLength = -1;
+                averageNodeExplored = -1;
+            }
+            sb_lb8.append("Solved: " + solved + ", Solvable fraction: " + String.format("%.2f", (solved / EPState.Number_Of_Solvable_States) * 100) + "%, Time consumed: " + timeConsumed + ", Average path length: " + averageLength + ", Average node explored: " + averageNodeExplored);
+            System.out.println(sb_lb8.toString());
+
+            //Local beam search k = 5 part
+            currentSolution.clear();
+            solved = 0;
+            sumOfLength = 0;
+            sumOfNodeExplored = 0;
+            StringBuilder sb_lb7 = new StringBuilder();
+            sb_lb7.append("local beam search (k = 5): ");
+            startTime = System.currentTimeMillis();
+            for (State currentState : solvables) {
+                setState(currentState);
+                currentSolution.add(solveBeam(5, false));
+            }
+            timeConsumed = System.currentTimeMillis() - startTime;
+            for (Solution solution : currentSolution) {
+                if (solution.getStepsToGoal() != -1) {
+                    solved++;
+                    sumOfLength += solution.getStepsToGoal();
+                    sumOfNodeExplored += solution.getNodesExplored();
+                }
+            }
+            if (solved != 0) {
+                averageLength = sumOfLength / solved;
+                averageNodeExplored = sumOfNodeExplored / solved;
+            } else {
+                averageLength = -1;
+                averageNodeExplored = -1;
+            }
+            sb_lb7.append("Solved: " + solved + ", Solvable fraction: " + String.format("%.2f", (solved / EPState.Number_Of_Solvable_States) * 100) + "%, Time consumed: " + timeConsumed + ", Average path length: " + averageLength + ", Average node explored: " + averageNodeExplored);
+            System.out.println(sb_lb7.toString());
+
             //Local beam search k = 10 part
             currentSolution.clear();
             solved = 0;

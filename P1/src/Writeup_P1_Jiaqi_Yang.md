@@ -2,6 +2,8 @@
 
 ###### Jiaqi Yang (jxy530)
 
+###### 09/27/2019
+
 ------
 
 #### 1. Code Design
@@ -357,14 +359,88 @@ Lastly we test solve beam command. Obviously, the local beam search is not optim
 
 #### 3. Experiments
 
+###### Control Experiments of the Code
 
+Before diving into the experiments and discussion sections, I would like to present my output of control experiments. I implemented a method called getExperimentAndDiscussionInfo in EPState class, and the outputs will be self-explanatory. I will elaborate these outputs as answers for experiments and discussion sections.
+
+> ```
+> Command:
+> getExperimentAndDiscussionInfo
+> 
+> Output:
+> Here we present all the information required for experiments and discussion section.
+> -------------------------------------------------------------------------------------
+> MaxNodes: 50
+> h1: Solved: 728, Solvable fraction: 0.40%, Time consumed: 7556, Average path length: 26, Average node explored: 8
+> h2: Solved: 4453, Solvable fraction: 2.45%, Time consumed: 8168, Average path length: 31, Average node explored: 13
+> local beam search (k = 2): Solved: 13432, Solvable fraction: 7.40%, Time consumed: 9705, Average path length: 37, Average node explored: 23
+> local beam search (k = 3): Solved: 6656, Solvable fraction: 3.67%, Time consumed: 9640, Average path length: 37, Average node explored: 20
+> local beam search (k = 5): Solved: 2582, Solvable fraction: 1.42%, Time consumed: 10642, Average path length: 38, Average node explored: 17
+> local beam search (k = 10): Solved: 694, Solvable fraction: 0.38%, Time consumed: 13190, Average path length: 35, Average node explored: 15
+> local beam search (k = 20): Solved: 320, Solvable fraction: 0.18%, Time consumed: 18478, Average path length: 31, Average node explored: 13
+> local beam search (k = 30): Solved: 222, Solvable fraction: 0.12%, Time consumed: 24363, Average path length: 27, Average node explored: 12
+> local beam search (k = 50): Solved: 194, Solvable fraction: 0.11%, Time consumed: 32433, Average path length: 26, Average node explored: 11
+> local beam search (k = 100): Solved: 183, Solvable fraction: 0.10%, Time consumed: 60845, Average path length: 29, Average node explored: 11
+> -------------------------------------------------------------------------------------
+> MaxNodes: 100
+> h1: Solved: 1656, Solvable fraction: 0.91%, Time consumed: 16125, Average path length: 54, Average node explored: 10
+> h2: Solved: 11483, Solvable fraction: 6.33%, Time consumed: 15414, Average path length: 57, Average node explored: 14
+> local beam search (k = 2): Solved: 55507, Solvable fraction: 30.59%, Time consumed: 17874, Average path length: 66, Average node explored: 38
+> local beam search (k = 3): Solved: 37432, Solvable fraction: 20.63%, Time consumed: 19037, Average path length: 71, Average node explored: 31
+> local beam search (k = 5): Solved: 22007, Solvable fraction: 12.13%, Time consumed: 20655, Average path length: 74, Average node explored: 25
+> local beam search (k = 10): Solved: 6276, Solvable fraction: 3.46%, Time consumed: 24215, Average path length: 76, Average node explored: 20
+> local beam search (k = 20): Solved: 1579, Solvable fraction: 0.87%, Time consumed: 30906, Average path length: 71, Average node explored: 16
+> local beam search (k = 30): Solved: 804, Solvable fraction: 0.44%, Time consumed: 37237, Average path length: 63, Average node explored: 14
+> local beam search (k = 50): Solved: 560, Solvable fraction: 0.31%, Time consumed: 50729, Average path length: 59, Average node explored: 13
+> local beam search (k = 100): Solved: 434, Solvable fraction: 0.24%, Time consumed: 85886, Average path length: 56, Average node explored: 12
+> -------------------------------------------------------------------------------------
+> MaxNodes: 500
+> h1: Solved: 9679, Solvable fraction: 5.33%, Time consumed: 144279, Average path length: 276, Average node explored: 13
+> h2: Solved: 70675, Solvable fraction: 38.95%, Time consumed: 114685, Average path length: 256, Average node explored: 18
+> local beam search (k = 2): Solved: 181409, Solvable fraction: 99.98%, Time consumed: 41008, Average path length: 167, Average node explored: 89
+> local beam search (k = 3): Solved: 179233, Solvable fraction: 98.78%, Time consumed: 47782, Average path length: 188, Average node explored: 70
+> local beam search (k = 5): Solved: 170811, Solvable fraction: 94.14%, Time consumed: 60905, Average path length: 215, Average node explored: 53
+> local beam search (k = 10): Solved: 166086, Solvable fraction: 91.54%, Time consumed: 80130, Average path length: 264, Average node explored: 39
+> local beam search (k = 20): Solved: 135552, Solvable fraction: 74.71%, Time consumed: 123659, Average path length: 328, Average node explored: 30
+> local beam search (k = 30): Solved: 98186, Solvable fraction: 54.11%, Time consumed: 160136, Average path length: 360, Average node explored: 26
+> local beam search (k = 50): Solved: 45005, Solvable fraction: 24.80%, Time consumed: 212110, Average path length: 382, Average node explored: 23
+> local beam search (k = 100): Solved: 10225, Solvable fraction: 5.64%, Time consumed: 293340, Average path length: 365, Average node explored: 18
+> -------------------------------------------------------------------------------------
+> ```
+
+
+
+> (a) How does fraction of solvable puzzles from random initial states vary with the
+> maxNodes limit?
+
+
+
+> (b) For A* search, which heuristic is better?
+
+
+
+> (c) How does the solution length vary across the three search methods?
+
+
+
+> (d) For each of the three search methods, what fraction of your generated problems
+> were solvable?
 
 ------
 
 #### 4. Discussion
 
+> (a) Based on your experiments, which search algorithm is better suited for this
+> problem? Which finds shorter solutions? Which algorithm seems superior in terms
+> of time and space?
+
+
+
+> (b) Discuss any other observations you made, such as the difficulty of implementing
+> and testing each of these algorithms.
+
 ------
 
 #### Extra Credit
 
-Hopefully I could get extra credit done, at least partially.
+TAT no enough time to do it.
