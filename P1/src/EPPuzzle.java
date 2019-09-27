@@ -74,11 +74,11 @@ public class EPPuzzle extends Puzzle {
     @Override
     public void getExperimentAndDiscussionInfo() {
         ArrayList<Integer> maxNodesList = new ArrayList<>();
-        //maxNodesList.add(50);
-        //maxNodesList.add(100);
-        //maxNodesList.add(500);
-        //maxNodesList.add(1000);
-        //maxNodesList.add(5000);
+        maxNodesList.add(50);
+        maxNodesList.add(100);
+        maxNodesList.add(500);
+        maxNodesList.add(1000);
+        maxNodesList.add(5000);
         maxNodesList.add(10000);
         maxNodesList.add(50000);
         maxNodesList.add(100000);
@@ -122,7 +122,7 @@ public class EPPuzzle extends Puzzle {
                     solved++;
                     sumOfLength += solution.getStepsToGoal();
                     sumOfNodeExplored += solution.getNodesExplored();
-                    if(solved % 5000 == 0){
+                    if(solved % 10 == 0){
                         System.out.println("Solve 5000");
                     }
                 }
@@ -157,9 +157,6 @@ public class EPPuzzle extends Puzzle {
                     solved++;
                     sumOfLength += solution.getStepsToGoal();
                     sumOfNodeExplored += solution.getNodesExplored();
-                    if(solved % 5000 == 0){
-                        System.out.println("Solve 5000");
-                    }
                 }
             }
             if (solved != 0) {
@@ -172,7 +169,6 @@ public class EPPuzzle extends Puzzle {
             sb_h2.append("Solved: " + solved + ", Solvable fraction: " + String.format("%.2f", (solved / EPState.Number_Of_Solvable_States) * 100) + "%, Time consumed: " + timeConsumed + ", Average path length: " + averageLength + ", Average node explored: " + averageNodeExplored);
             System.out.println(sb_h2.toString());
 
-            /*
             //Local beam search k = 2 part
             currentSolution.clear();
             solved = 0;
@@ -412,7 +408,6 @@ public class EPPuzzle extends Puzzle {
             }
             sb_lb5.append("Solved: " + solved + ", Solvable fraction: " + String.format("%.2f", (solved / EPState.Number_Of_Solvable_States) * 100) + "%, Time consumed: " + timeConsumed + ", Average path length: " + averageLength + ", Average node explored: " + averageNodeExplored);
             System.out.println(sb_lb5.toString());
-             */
         }
     }
 
