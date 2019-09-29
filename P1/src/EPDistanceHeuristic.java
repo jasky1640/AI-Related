@@ -11,7 +11,6 @@ public class EPDistanceHeuristic implements Heuristic{
     private static final String EP_Misplaced_Heuristic_Name = "h2";
 
     //Calculate the heuristic value of a given 8-puzzle state with function h2
-    @Override
     public double calculate(State state){
         if(!(state instanceof EPState)){
             System.out.println("Invalid state provided");
@@ -33,7 +32,6 @@ public class EPDistanceHeuristic implements Heuristic{
     }
 
     //Return the String identifier of current heuristic function, h2
-    @Override
     public String getName(){
         return EP_Misplaced_Heuristic_Name;
     }

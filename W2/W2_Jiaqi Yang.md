@@ -29,7 +29,13 @@
 > you might adapt simulated annealing to gradient ascent search to reduce this
 > problem. Could the gradient be considered a heuristic? Explain. (10 points)
 
-Answer
+###### Gradient Ascent Search
+
+Gradient ascent search algorithm moves in the direction of the gradient evaluated at each point. Starting with point p<sub>0</sub>, the gradient is evaluated and the function moves to the next point. Then the process is repeated until a stopping condition is met, which is reaching the local maximum. Gradient is a derivative of a function at a certain point; basically, it's the slope of the line. So in simple words, gradient ascent search algorithm takes small steps in the locally steepest direction and reach local (hopefully global) maximum. So like hill-climbing algorithm, gradient ascent search is not guaranteed to reach global maximum.
+
+######  Adaptation of Simulated Annealing
+
+
 
 ------
 
