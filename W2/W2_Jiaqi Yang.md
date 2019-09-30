@@ -7,7 +7,7 @@
 ------
 
 > 1. Contrast A* search with simulated annealing. Consider the algorithms, choice of
->    next actions, memory complexity, and optimality. (10 points)
+>    next actions, memory complexity, and optimality.
 
 ###### A* search
 
@@ -27,7 +27,7 @@
 
 > 2. Gradient ascent search is prone to local optima just like hill climbing. Describe how
 > you might adapt simulated annealing to gradient ascent search to reduce this
-> problem. Could the gradient be considered a heuristic? Explain. (10 points)
+> problem. Could the gradient be considered a heuristic? Explain.
 
 ###### Gradient Ascent Search
 
@@ -59,38 +59,64 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 
 ------
 
-> 4. Problem 5.8, Russell & Norvig. (20 points) (Consider the two-player game…) but
->    modified to use 5 spaces with the starting position as follows:
->    For 5.8d, consider the only possibilities that A starts in either position 1 or 2.
+> 4. Consider the two-player game described in Figure 5.17. But modified to use 5 spaces with the starting position as follows:
+
+![1569860196187](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569860196187.png)
+
+> **a**. Draw the complete game tree, using the following conventions:
+>
+> -  Write each state as (sA, sB), where sA and sB denote the token locations.
+> - Put each terminal state in a square box and write its game value in a circle.
+> - Put *loop states* (states that already appear on the path to the root) in double square boxes. Since their value is unclear, annotate each with a “?” in a circle.
+
+
+
+> **b**. Now mark each node with its backed-up minimax value (also in a circle). Explain how you handled the “?” values and why.
+
+
+
+> **c**. Explain why the standard minimax algorithm would fail on this game tree and briefly sketch how you might fix it, drawing on your answer to (b). Does your modified algorithm give optimal decisions for all games with loops?
+
+
+
+> **d**. This 4-square game can be generalized to n squares for any n > 2. Prove that A wins if n is even and loses if n is odd. (For 5.8d, consider the only possibilities that A starts in either position 1 or 2.)
+
+------
+
+> 5. Consider the following procedure for choosing moves in games with chance nodes:
+>    - Generate some dice-roll sequences (say, 50) down to a suitable depth (say, 8)
+>    - With known dice rolls, the game tree becomes deterministic. For each dice-roll sequence, solve the resulting deterministic game tree using alpha–beta.
+>    - Use the results to estimate the value of each move and to choose the best. Will this procedure work well? Why (or why not)?
 
 Answer
 
 ------
 
-> 5. Problem 5.19, Russell & Norvig. (10 points) (Consider the following procedure...)
+> 6. Consider the problem of constructing (not solving) crossword puzzles:5 fitting words into a rectangular grid. The grid, which is given as part of the problem, specifies which squares are blank and which are shaded. Assume that a list of words (i.e., a dictionary) is provided and that the task is to fill in the blank squares by using any subset of the list. Formulate this problem precisely in two ways:
 
-Answer
+> a. As a general search problem. Choose an appropriate search algorithm and specify a heuristic function. Is it better to fill in blanks one letter at a time or one word at a time?
 
-------
 
-> 6. Problem 6.3, Russell & Norvig. (10 points) (Consider the problem of constructing...)
 
-Answer
+> b. As a constraint satisfaction problem. Should the variables be words or letters? Which formulation do you think will be better? Why?
 
 ------
 
-> 7. Problem 6.5, Russell & Norvig. (10 points) (Solve the cryptarithmetic problem…)
+> 7. Solve the cryptarithmetic problem in Figure 6.2 by hand, using the strategy of backtracking with forward checking and the MRV and least-constraining-value heuristics.
 
-Answer
+![1569860642997](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569860642997.png)
 
-------
 
-> 8. Problem 6.9, Russell & Norvig. (10 points) (Explain why it is a good heuristic...)
-
-Answer
 
 ------
 
-> 9. Problem 6.11, Russell & Norvig. (10 points) (Use the AC-3 algorithm...)
+> 8. Explain why it is a good heuristic to choose the variable that is most constrained but the value that is least constraining in a CSP search.
 
-Answer
+
+
+------
+
+> 9. Use the AC-3 algorithm to show that arc consistency can detect the inconsistency of the partial assignment {WA=green, V =red} for the problem shown in Figure 6.1.
+
+![1569860783465](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569860783465.png)
+
