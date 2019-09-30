@@ -88,17 +88,19 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 >    - With known dice rolls, the game tree becomes deterministic. For each dice-roll sequence, solve the resulting deterministic game tree using alpha–beta.
 >    - Use the results to estimate the value of each move and to choose the best. Will this procedure work well? Why (or why not)?
 
-Answer
+
 
 ------
 
-> 6. Consider the problem of constructing (not solving) crossword puzzles:5 fitting words into a rectangular grid. The grid, which is given as part of the problem, specifies which squares are blank and which are shaded. Assume that a list of words (i.e., a dictionary) is provided and that the task is to fill in the blank squares by using any subset of the list. Formulate this problem precisely in two ways:
+> 6. Consider the problem of constructing (not solving) crossword puzzles: fitting words into a rectangular grid. The grid, which is given as part of the problem, specifies which squares are blank and which are shaded. Assume that a list of words (i.e., a dictionary) is provided and that the task is to fill in the blank squares by using any subset of the list. Formulate this problem precisely in two ways:
 
 > a. As a general search problem. Choose an appropriate search algorithm and specify a heuristic function. Is it better to fill in blanks one letter at a time or one word at a time?
 
 
 
 > b. As a constraint satisfaction problem. Should the variables be words or letters? Which formulation do you think will be better? Why?
+
+
 
 ------
 
