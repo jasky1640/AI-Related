@@ -35,7 +35,11 @@ Gradient ascent search algorithm moves in the direction of the gradient evaluate
 
 ######  Adaptation of Simulated Annealing
 
+To reduce the problem of gradient ascent search discussed above that the algorithm is prone to local maximum, we could adapt the philosophy of simulated annealing to reduce this problem. Instead of choosing the steepest direction, the new algorithm should randomly choose a gradient (by randomly choosing an immediately neighbor and calculate the gradient) and then decide whether go or not: if the gradient is positive, then we will take the step for sure; if the gradient is negative, we move to the state with a possibility of P = e<sup>ΔE/T</sup>, similar to the function of simulated annealing dependent on the temperature. 
 
+###### Gradient as Heuristic
+
+By definition, a heuristic function, or simply a heuristic, is a function that ranks alternatives in search algorithms at each branching step based on available information to decide which branch to follow. For a state in gradient ascent search algorithm, the state could read all the immediate neighbors and calculate the gradients of the path leading to all those neighbors. The gradient would be an indicator of steepest direction, which leads to local optimum. Therefore, the gradient could be considered as a heuristic. 
 
 ------
 
