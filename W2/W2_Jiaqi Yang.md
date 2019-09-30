@@ -43,9 +43,19 @@ By definition, a heuristic function, or simply a heuristic, is a function that r
 
 ------
 
-> 3. Problem 5.7, Russell & Norvig. (10 points) (Prove the following assertion...)
+> 3. Prove the following assertion: For every game tree, the utility obtained by MAX using minimax decision against a suboptimal MIN will never be lower than the utility obtained playing against an optimal MIN. Can you come up with a game tree in which MAX can do still better using a suboptimal strategy against a suboptimal MIN? 
 
-Answer
+![1569857723466](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569857723466.png)
+
+​								Figure 1: Minimax Tree from Lecture 6 Slide, EECS 391 CWRU
+
+###### Proof of Assertion
+
+If the opponent is optimal and perfectly rational, then Minimax algorithm is able to choose move to position (or state) with highest minimax value. The underlying assertion in the selection of moves for Minimax algorithm is that the opponent (MIN) will always try to minimize the utility for us (MAX). Therefore, if we play Minimax algorithm against a suboptimal opponent (MIN), which will choose the utility value greater or equal to the predicted optimal opponent, we (MAX) would consequently always obtain the utility value greater or equal to our predicted utility value. In this figure as an example, if we play Minimax algorithm against a suboptimal opponent, we will choose a1 leading to state B for MIN. If MIN behaves optimally, it will take b1 that yields utility value of 3. However, if MIN behaves suboptimally, it might take b1, b2, or b3 that will possibly yields utility value of 3, 8, or 12, which will be never lower than the utility obtained playing against an optimal MIN.
+
+###### Improved Suboptimal Strategy
+
+However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax algorithm might not take full advantage of MIN's suboptimality. In this figure as an example, if we play Minimax algorithm against a suboptimal opponent, we will choose a1 leading to state B for MIN. However, if we know that MIN has a strong preference to d1 path, then we miss out the opportunity to gain utility value of 14, instead of at most 12. Therefore, we could play suboptimal strategy against the suboptimal opponent. The underlying assumption for the suboptimal strategy is that we could predict the preference of the suboptimal opponent. If so, the MIN values in the figure will be labeled as the values of predicted move, instead of minimum utility values. In this way, we could set up "traps" to gain higher utility value than Minimax algorithm does.
 
 ------
 
