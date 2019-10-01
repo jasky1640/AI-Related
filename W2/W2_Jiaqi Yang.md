@@ -2,7 +2,7 @@
 
 #### Jiaqi Yang (jxy530)
 
-#### Due October 2rd, Tuesday
+#### Due October 1st, Tuesday
 
 ------
 
@@ -148,11 +148,21 @@ The idea of alpha-beta pruning is that based on a deterministic game tree, we ar
 
 > a. As a general search problem. Choose an appropriate search algorithm and specify a heuristic function. Is it better to fill in blanks one letter at a time or one word at a time?
 
+Depth-first search will be a simple choice to solve this problem. With a random or algorithm-selected word to start and fill in a random or algorithm selected appropriate slot, Depth-first search algorithm will keep going deep in the search tree until it reaches the goal state, which is the state that all the words are filled in the grid with all constraints followed, or a failure state that will start another round of search. 
 
+A possible heuristic function could be empty grid squares left, which will reflect on the length of the next-selected word, given the common sense that the longer words will be relatively fewer than the shorter words. 
+
+For Depth-first search algorithm and the proposed heuristic function, it is better to fill in blanks one word at a time. It will be unnecessary to fill in blank one letter at a time since the algorithm and heuristic function focus on a larger picture, which is the characteristics of selected words. It will also minimize the number of steps and potentially improve the running time of the algorithm.
 
 > b. As a constraint satisfaction problem. Should the variables be words or letters? Which formulation do you think will be better? Why?
 
+###### Word-Based Approach
 
+The word-based approach for crossword puzzles is implemented more directly and intuitively. The variables are the words which need to be filled in, and the value will be the position in the grid that the words will fit in. The grid provides the initial constraints for each word, such as the number of letters, who overlaps relationships the word has with other words in the grid. Therefore, the advantage to this approach is that as a direct implementation of the generic CSP model, there are known algorithms that could be adapted. However, the constraints for the same letter that overlaps in the position of two or more letters intersects is hard to specify.
+
+###### Letter-Based Approach
+
+Instead of looking at a solution as a set of words, this approach vies the grid as a matrix of squares, and therefore a solution is an assignment of characters to grid squares such that each string of character, read vertically or horizontally, is a word in the dictionary. Constraints on the length of words are also native to grid squares. Letter-based approach is feasible with most constraining value heuristic that will increase the algorithm's run time. The advantage of this approach is that although it is less instinctive than word-based approach, it will be easier to come up with constraints and therefore speed up the implementation process. Also, it has the advantage that the time to solution is bounded, since each square can only have one of 26 possible values at most. Moreover, with the utility of MRV heuristic, its performance might be better than word-based approach. Therefore, I think letter-based approach will be better.
 
 ------
 
@@ -160,7 +170,9 @@ The idea of alpha-beta pruning is that based on a deterministic game tree, we ar
 
 ![1569860642997](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569860642997.png)
 
+![1569899855523](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569899855523.png)
 
+![1569899867645](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569899867645.png)
 
 ------
 
