@@ -45,7 +45,7 @@ By definition, a heuristic function, or simply a heuristic, is a function that r
 
 > 3. Prove the following assertion: For every game tree, the utility obtained by MAX using minimax decision against a suboptimal MIN will never be lower than the utility obtained playing against an optimal MIN. Can you come up with a game tree in which MAX can do still better using a suboptimal strategy against a suboptimal MIN? 
 
-![1569857723466](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569857723466.png)
+![1569857723466](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569857723466.png)
 
 ​								Figure 1: Minimax Tree from Lecture 6 Slide, EECS 391 CWRU
 
@@ -61,7 +61,7 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 
 > 4. Consider the two-player game described in Figure 5.17. But modified to use 5 spaces with the starting position as follows:
 
-![1569860196187](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569860196187.png)
+![1569860196187](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569860196187.png)
 
 > **a**. Draw the complete game tree, using the following conventions:
 >
@@ -69,17 +69,67 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 > - Put each terminal state in a square box and write its game value in a circle.
 > - Put *loop states* (states that already appear on the path to the root) in double square boxes. Since their value is unclear, annotate each with a “?” in a circle.
 
-
+![1569877615900](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569877615900.png)
 
 > **b**. Now mark each node with its backed-up minimax value (also in a circle). Explain how you handled the “?” values and why.
 
+Each node with its back-up minimax value is marked in the figure of part a.
 
+To handle the "?" value, we assume that an agent is always optimal and perfectly rational, therefore it chooses the state that will lead to the victory. Thus, when B (MIN) chooses from -1 (win) and ?, B will always choose -1 to win; when B(MIN) chooses from +1 (lost) and ?, B will always choose ? to enter the ? state instead of failure. Same theory behind A(MAX)'s attitude toward "?" state: when A chooses from +1 (win) and ?, A will always choose +1 to win; when A chooses from -1 (lost) and ?, A will always choose ? to enter the ? state instead of failure. For both A and B, they will always (and only be able to) choose ? from ? and ?.
 
 > **c**. Explain why the standard minimax algorithm would fail on this game tree and briefly sketch how you might fix it, drawing on your answer to (b). Does your modified algorithm give optimal decisions for all games with loops?
 
+A standard minimax algorithm is implemented in a depth-first behavior pattern, and therefore in this case with the presence of loop states, it would go into an infinite loop. 
 
+To fix this problem, we need to modify the minimax algorithm to recognize the loop states. So just like what we do in the part a and b: if we compare the current searched state with the stack and find it repeated, we return a "?" value. When comparing and determining the values of minimax nodes, we follow the rules described in part b to handle the "?" values. If the result of the minimax algorithm is "?", then it means that the game will go to an infinite loop and therefore lead to a draw-like situation, otherwise one of the rational and optimal parties will lose.
 
 > **d**. This 4-square game can be generalized to n squares for any n > 2. Prove that A wins if n is even and loses if n is odd. (For 5.8d, consider the only possibilities that A starts in either position 1 or 2.)
+
+**The underlying assumption of n-square game is that n > 2, as well as A will only start at position 1, and B will only start at position n.**
+
+###### Base Case
+
+Since for n-square game, n is larger than 2, and obviously n is an integer, the least possible odd value of n is 3. 
+
+- The starting position is (1,3), then A's only first move is (2,3), and B's only first move is (2,1) and leads to win.
+
+The least possible even value of n is 4.
+
+- If the starting position is (1,4), then A's only first move is (2,4), B's only first move is (2,3), and A will move to (4,3) to win.
+
+###### Proof of Induction
+
+For n > 4 and n is odd, the initiate state will be (1,n), then the next two steps will guarantee to be (2,n-1). Since the game is to reach the opposite side first, a rational agent will always move forward instead of backward, the game will be reduce to n-2 square game and eventually all way to 3-square game, where B will win (in other words, A will lose).
+
+For n>4 and n is even, the initiate state will also be (1,n), then the next two steps will guarantee to be (2,n-1). Since the game is to reach the opposite side first, a rational agent will always move forward instead of backward, the game will be reduce to n-2 square game and eventually all way to 3-square game, where A will win.
+
+Therefore, if the starting state is (1,n) for A and B, then A wins if n is even and loses if n is odd.
+
+**The underlying assumption of n-square game is that n > 2, as well as A will only start at position 2, and B will only start at position n.**
+
+###### Base Case
+
+Since for n-square game, n is larger than 2, and obviously n is an integer, the least possible odd value of n is 3. 
+
+- The starting position is (2,3), then A's only first move is (1,3), and B's only first move is (1,2). Then A will move to (3,2) to win.
+
+The least possible even value of n is 4.
+
+- If the starting position is (2,4), then A's rational first move is (3,4), B's only first move is (3,2), and A will move to (4,2) to win.
+
+Since 3-square for starting position 2 of A is unusual, we work on 5-square, the next available odd integer, to be safe.
+
+- If the starting position is (2,5), then A will move to (3,5), B's only first move is (3,4), and A will move to (5,4) to win.
+
+###### Proof of Induction
+
+For n > 4 and n is odd, the initiate state will be (2,n), then the next two steps will guarantee to be (3,n-1). Since the game is to reach the opposite side first, a rational agent will always move forward instead of backward, the game will be reduce to n-2 square game and eventually all way to 5-square game, where A will win .
+
+For n>4 and n is even, the initiate state will also be (2,n), then the next two steps will guarantee to be (3,n-1). Since the game is to reach the opposite side first, a rational agent will always move forward instead of backward, the game will be reduce to n-2 square game and eventually all way to 4-square game, where A will win.
+
+Therefore, if starting state is (2,n) for A and B, then A wins no matter what situation. (In this case, it is just like A is playing n-1 square while B is playing n square. Even A and B's initial distance is odd, B will not be able to win.) 
+
+Only if starting state is (2,n-1) for A and B, and n is larger than 4, the assertion stands: A wins if n is even and loses if n is odd.
 
 ------
 
@@ -88,7 +138,9 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 >    - With known dice rolls, the game tree becomes deterministic. For each dice-roll sequence, solve the resulting deterministic game tree using alpha–beta.
 >    - Use the results to estimate the value of each move and to choose the best. Will this procedure work well? Why (or why not)?
 
+The procedure only generates 50 dice-roll sequences with depth of 8; assuming that the dice used here has 6 different values (1-6), we could calculate that the amount of all possible dice-roll sequence is 6<sup>8</sup>, which is 1,679,616. The dice-roll sequences we generate here is only approximately 0.003% of all the possible sequences. Unless we are able to look at all the dice-roll sequence, the resulting game tree is not deterministic. 
 
+The idea of alpha-beta pruning is that based on a deterministic game tree, we are able to prune branches that cannot influence final decision to speed up algorithm's running time. If we do not have access to all values of each move, we are not able to use alpha-beta pruning, given the fact that the unexamined children with no estimated value could have any value. Thus, the result and move selected by this algorithm will not be complete. As a result, this procedure will not work well for the reasons discussed above.
 
 ------
 
@@ -106,7 +158,7 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 
 > 7. Solve the cryptarithmetic problem in Figure 6.2 by hand, using the strategy of backtracking with forward checking and the MRV and least-constraining-value heuristics.
 
-![1569860642997](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569860642997.png)
+![1569860642997](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569860642997.png)
 
 
 
@@ -120,5 +172,5 @@ However, if MIN behaves suboptimally, MAX, who plays optimally, uses Minimax alg
 
 > 9. Use the AC-3 algorithm to show that arc consistency can detect the inconsistency of the partial assignment {WA=green, V =red} for the problem shown in Figure 6.1.
 
-![1569860783465](C:\Users\Jasky Yang\AppData\Roaming\Typora\typora-user-images\1569860783465.png)
+![1569860783465](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569860783465.png)
 
