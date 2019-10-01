@@ -166,7 +166,15 @@ The idea of alpha-beta pruning is that based on a deterministic game tree, we ar
 
 > 8. Explain why it is a good heuristic to choose the variable that is most constrained but the value that is least constraining in a CSP search.
 
+###### Most Constrained Variable
 
+First of all, it is a good heuristic to choose the variable that is most constrained in a CSP search. By following this principle, we will always choose the node with most edges in the graph. This fits the philosophy of Degree Heuristic, which choose variable that most constrains others and therefore lead to maximum reduction in tree size. Since we need to work with the most constrained node soon or later, it will be most beneficial to fail as early as possible, instead of failing when most of the variables have been assigned with a values, a situation that will lead to massive backtracks.
+
+###### Least Constraining Value
+
+Then, it is a good heuristic to choose the value that is least constraining in a CSP search. By following this principle, we will always choose the one that rules out the fewest values in the remaining variables and therefore leave maximal flexibility for a solution. Since we have a pool of available values for each variable, by choosing the least constraining value, we will leave the most available values for other neighbor variables and most likely avoid the future assignments from being assigned with conflicting values against the constraints.
+
+Therefore, a good heuristic is to choose the variable that is most constrained but the value that is least constraining in a CSP search.
 
 ------
 
@@ -174,3 +182,16 @@ The idea of alpha-beta pruning is that based on a deterministic game tree, we ar
 
 ![1569860783465](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1569860783465.png)
 
+AC-3 algorithm aims to make every variable arc-consistent, which means that every variable is arc consistent with every other variable, and maintain a queue of arcs to consider. Initially, AC-3 has all the arcs in the CSP. Then AC-3 pops off an arc and make it X<sub>i</sub> arc-consistent with respect to X<sub>j</sub>. If this leaves D<sub>i</sub> unchanged,then AC-3 moves on to next arc; if this narrows D<sub>i</sub>, then AC-3 add X<sub>i</sub>'s neighbors into the queue. If a domain is revised down to nothing, then AC-3 returns failure and indicates an arc inconsistency.
+
+Since the choice of arc is arbitrary, we will pick the arc in a manner that will prioritize the arcs that will yield changes in this case.
+
+1. Starting with arc SA-WA. Since we know that WA's value is Green, then we revise the domain of SA and remove Green. This leaves SA only Red and Blue. Put all SA's neighbors except for WA into the queue.
+2. Consider arc SA-V.  Since we know that V's value is Red, then we revise the domain of SA and remove Red. This leaves SA only Blue. Put all SA's neighbors except for V into the queue.
+3. Consider arc NSW-V. Since we know that V's value is Red, then we revise the domain of NSW and remove Red. This leaves NSW only Blue and Green. Put all NSW's neighbors except for V into the queue.
+4. Consider arc NT-WA. Since we know that WA's value is Green, then we revise the domain of NT and remove Green. This leaves NT only Red and Blue. Put all NT's neighbors except for WA into the queue.
+5. Consider arc NT-SA. Since we know that SA's value is Blue, then we revise the domain of NT and remove Blue. This leaves NT only Red. Put all NT's neighbors except for SA into the queue.
+6. Consider arc Q-SA. Since we know that SA's value is Blue, then we revise the domain of Q and remove Blue. This leaves Q only Red and Green. Put all Q's neighbors except for SA into the queue.
+7. Consider arc NSW-SA. Since we know that SA's value is Blue, then we revise the domain of NSW and remove Blue. This leaves NSW only Green. Put all NSW's neighbors except for SA into the queue.
+8. Consider arc Q-NT. Since we know that NT's value is Red, then we revise the domain of Q and remove Red. This leaves Q only Green. Put all Q's neighbors except for NT into the queue.
+9. Consider arc Q-NSW. Since we know that NSW's value is Green, then we revise the domain of Q and remove Green. This leaves Q nothing in its domain. This shows an arc inconsistency of the partial assignment, and as a result AC-3 will detect the inconsistency of the partial assignment {WA=green, V =red} for the problem and return a failure (Boolean False).
