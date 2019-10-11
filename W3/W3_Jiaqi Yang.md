@@ -108,7 +108,7 @@ P(B = +|virus = present) = 0.9
 
 P(B = +|virus = absent) = 0.05
 
-We want to know which test returning positive is more indicative of someone really carrying the virus;; in other word mathematically, we want to know the values of P(virus = present|A = +) and P(virus = present|B = +).
+We want to know which test returning positive is more indicative of someone really carrying the virus; in other word mathematically, we want to know the values of P(virus = present|A = +) and P(virus = present|B = +).
 
 By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(virus = present|A = +) by using the equation P(A = +|virus = present) P(virus = present) / P(A = +).
 
@@ -128,7 +128,27 @@ Given the facts that P(virus = present|A = +) = 0.088 and P(virus = present|B = 
 
 > 5. Show that the statement of conditional independence P(X,Y|Z) = P(X|Z) P(Y|Z) is equivalent to each of the statements P(X|Y,Z) = P(X|Z) and P(Y|X,Z) = P(Y|Z)
 
+From the statement of corollary of conditional probability P(Y|X)=P(X,Y) / P(X), we can convert P(X,Y|Z) to P(X,Y,Z) / P(Z). 
 
+Similarly, we can convert P(Y|Z) to P(Y,Z) / P(Z). Then, the statement of conditional independence becomes 
+
+ P(X,Y|Z) = P(X|Z) P(Y|Z) → P(X,Y,Z) / P(Z) = P(X|Z) P(Y,Z) / P(Z)
+
+From the product rule, we can convert P(X,Y,Z) into P(X|Y,Z) P(Y,Z), and therefore the expression becomes
+
+P(X|Y,Z) P(Y,Z) / P(Z) = P(X|Z) P(Y,Z) / P(Z)
+
+which can be easily reduced to P(X|Y,Z) = P(X|Z).
+
+From the given statement of conditional independence P(X,Y|Z) = P(X|Z) P(Y|Z), we could convert it to P(Y|Z) = P(X,Y|Z) / P(X|Z).
+
+Based on the conditional probability, we get P(X,Y) = P(X|Y) P(X). Also, we know that P(X,Y) = P(Y,X). Therefore, from P(X,Y|Z) we get P(X,Y|Z) = P(Y|X|Z) P(X|Z). Therefore, the expression becomes
+
+P(Y|Z) = P(Y|X,Z) P(X|Z) / P(X|Z)
+
+which can be easily reduced to P(Y|X,Z) = P(Y|Z).
+
+Therefore, the statement of conditional independence P(X,Y|Z) = P(X|Z) P(Y|Z) is equivalent to each of the statements P(X|Y,Z) = P(X|Z) and P(Y|X,Z) = P(Y|Z).
 
 ------
 
@@ -136,11 +156,31 @@ Given the facts that P(virus = present|A = +) = 0.088 and P(virus = present|B = 
 
 ###### a) Is it possible to calculate the most likely color for the taxi? (Hint: distinguish carefully between the proposition that the taxi is blue and the proposition that it appears blue.)
 
+From the descriptions, we could get the following information:
 
+P(Witness = Blue|Taxi = Blue) = 0.75
+
+P(Witness= Green|Taxi = Blue) = 0.25
+
+P(Witness = Blue|Taxi = Green) = 0.25
+
+P(Witness= Green|Taxi = Green) = 0.75
+
+We want to know the most likely color for the taxi; in other word mathematically, we want to know the value of P(Taxi = Blue|Witness = Blue). 
+
+By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(Taxi = Blue|Witness = Blue) by using P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) / P(Witness = Blue).
+
+P(Witness = Blue) = P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) + P(Witness = Blue|Taxi = Green) P(Taxi = Green)
+
+However, we are in the lack of information about the P(Taxi = Green) and P(Taxi = Blue). Since we know that all taxis in Athens are blue or green, we only need to know one of them, such as 30% of taxis in Athens are blue. With this information, it is not possible to calculate the most likely color for the taxi.
 
 ###### b) What if you know that 9 out of 10 Athenian taxis are green?
 
+From the descriptions, we could get the following additional information:
 
+P(Taxi = Blue) = 0.1
+
+P(Taxi = Green) = 0.9
 
 ------
 
