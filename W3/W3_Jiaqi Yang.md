@@ -186,7 +186,13 @@ We want to know the most likely color for the taxi; in other word mathematically
 
 By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(Taxi = Blue|Witness = Blue) by using P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) / P(Witness = Blue).
 
-P(Witness = Blue) = P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) + P(Witness = Blue|Taxi = Green) P(Taxi = Green)
+P(Witness = Blue) = P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) + P(Witness = Blue|Taxi = Green) P(Taxi = Green) = 0.75 * 0.1 + 0.25 * 0.9 = 0.3
+
+P(Taxi = Blue|Witness = Blue) = P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) / P(Witness = Blue) = 0.75 * 0.1 / 0.3 = 0.25
+
+Then P(Taxi = Green|Witness = blue) = 1 - 0.25 = 0.75
+
+Hence, the probability of green over blue is greater.
 
 ------
 
