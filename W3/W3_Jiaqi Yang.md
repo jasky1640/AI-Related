@@ -182,6 +182,12 @@ P(Taxi = Blue) = 0.1
 
 P(Taxi = Green) = 0.9
 
+We want to know the most likely color for the taxi; in other word mathematically, we want to know the value of P(Taxi = Blue|Witness = Blue). 
+
+By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(Taxi = Blue|Witness = Blue) by using P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) / P(Witness = Blue).
+
+P(Witness = Blue) = P(Witness = Blue|Taxi = Blue) P(Taxi = Blue) + P(Witness = Blue|Taxi = Green) P(Taxi = Green)
+
 ------
 
 > 7. You are designing a new system for detecting an explosive device. Your current design has a 1% false negative rate and a 5% false positive rate. The estimated frequency of actual devices through a typical security check point where the system will be employed is 1 in 5,000. Use the variables E to represent the explosive device and D (or D1 and D2) to represent the detector(s).
