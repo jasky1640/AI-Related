@@ -16,15 +16,29 @@
 
 ###### a) Show that this is a valid probability distribution.
 
+The basic axioms of probability theory say that every possible world has a probability between 0 and 1 and that the total probability of the set of possible worlds is 1. Therefore, in this case, the probability distribution will be valid if the sum of all possible P(x = i, y = j) for i from 1 to 4 and j from 1 to 4 is 1. By adding all the probabilities of every single possible world, we get 1 and thus this is a valid probability distribution.
 
+0.06  + 0.08 + 0.04 + 0.02 + 0.12 + 0.16 + 0.08 + 0.04 + 0.09 + 0.12 + 0.06 + 0.03 + 0.03 + 0.04 + 0.02 + 0.01 = 1
 
 ###### b) Write the mathematical expression for the distribution p(x) and calculate the distribution from the table.
 
+From the table, we get all the probabilities of every single possible world. From there, we could calculate by the expression: the value of p(x = i) is equal to the sum of all p(x = i, y = j) for all possible values of j. 
 
+P(x = 1, y = 1) = 0.06, P(x = 1, y = 2) = 0.08, P(x = 1, y = 3) = 0.04, P(x = 1, y = 4) = 0.02 → P(x = 1) = 0.2
+
+P(x = 2, y = 1) = 0.12, P(x = 2, y = 2) = 0.16, P(x = 2, y = 3) = 0.08, P(x = 2, y = 4) = 0.04 → P(x = 2) = 0.4
+
+P(x = 3, y = 1) = 0.09, P(x = 3, y = 2) = 0.12, P(x = 3, y = 3) = 0.06, P(x = 3, y = 4) = 0.03 → P(x = 3) = 0.3
+
+P(x = 4, y = 1) = 0.03, P(x = 4, y = 2) = 0.04, P(x = 4, y = 3) = 0.02, P(x = 4, y = 4) = 0.01 → P(x = 4) = 0.1 
+
+​			↓									↓									↓									↓
+
+P(y = 1) = 0.3				P(y = 2) = 0.4				P(y = 3) = 0.2				P(y = 4) = 0.1			
 
 ###### c) Are x and y independent? Justify your answer.
 
-
+Independence between propositions x and by can be written as P(x ∧ y) = P(x) P(y). For every possible world with x = i and y = j, for i from 1 to 4 and j from 1 to 4, we could get the probability of P(x ∧ y), for example P(x = 1, y = 1), by multiplying P(x = 1) and P(y = 1). The phenomenon holds true for every possible world. Therefore, x and y are independent. 
 
 ------
 
@@ -32,41 +46,83 @@
 
 ###### a) If P(a|b, c) = P(b|a, c), then P(a|c) = P(b|c)
 
-
+By conditional probability, we know that P(A|B) = P(A and B) / P(B). Then from P(a|b,c) we get P(a and b,c) / P(b,c), and from P(b|a,c) we get P(b and a,c) / P(a,c). Given the fact that P(a|b, c) = P(b|a, c). we could reduce them to P(b,c) = P(a,c) from the derived equations. We know P(A,B) = P(A|B) P(B), so by dividing P(c) from both P(b,c) and P(a,c), we get P(b|c) = P(a|c). Therefore we prove the statement is true.
 
 ###### b) If P(a|b, c) = P(a), then P(b|c) = P(b)
 
-
+From P(a|b, c) = P(a), we learn that a is independent of b and c; however, it does not indicate that b is independent of c. From example, a is rolling a dice, b is rolling another dice. In this case, if c is rolling a third dice, then the result of a is independent of the result of b and c, and b is independent of the result of b. However, if c = b, which is also the result of rolling the second dice, then b and c are obviously not independent. Therefore we prove the statement is false.
 
 ###### c) If P(a|b) = P(a), then P(a|b, c) = P(a|c)
 
-
+From P(a|b) = P(a), we learn that a is independent of b, however it does not imply that a is conditionally independent of b given c. A counterexample for this statement will be when c equals xor of a and b. Therefore we prove the statement is false.
 
 ------
 
 > 3. Given the full joint distribution shown in Figure 13.3, calculate the following
 
+![1570761231501](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1570761231501.png)
+
 ###### a) P(toothache)
 
+We could calculate P(toothache) by summing up the probabilities for each possible value of the other variables, including catch and cavity, and thereby taking them out of the equation. 
 
+P(toothache) = 0.108 + 0.012 + 0.016 + 0.064 = 0.2, or <0.2, 0.8> in vector notation
 
 ###### b) P(Cavity)
 
+Similarly, we could calculate P(Cavity) by summing up the probabilities for each possible value of the other variables, including catch and toothache, and thereby taking them out of the equation. 
 
+P(cavity) = 0.108 + 0.012 + 0.072 + 0.008 = 0.2, or <0.2, 0.8> in vector notation
 
 ###### c) P(Toothache|cavity)
 
+By conditional probability, we know that P(A|B) = P(A and B) / P(B). Therefore, we could calculate P(Toothache|cavity), using the equation P(Toothache and cavity) / P(cavity). Similarly, we could calculate P(Toothache and cavity) by summing up the probabilities for each possible value of the other variable, including catch, and thereby taking it out of the equation. 
 
+P(Toothache and cavity) = 0.108 + 0.012 = 0.12
+
+P(Toothache|cavity) = P(Toothache and cavity) / P(cavity) = 0.12 / 0.2 = 0.6, or <0.6, 0.4> in vector notation
 
 ###### d) P(Cavity|toothache ∨ catch)
 
+Similarly, by conditional probability, we know that P(A|B) = P(A and B) / P(B). Therefore, we could calculate P(Cavity|toothache ∨ catch), using the equation P(Cavity and (toothache ∨ catch)) / P(toothache ∨ catch).
 
+P(toothache ∨ catch) = 0.108 + 0.012 + 0.016 + 0.064 + 0.072 + 0.144 = 0.416
+
+P(Cavity and (toothache ∨ catch)) = 0.108 + 0.012 + 0.072 = 0.192
+
+P(Cavity|toothache ∨ catch) = P(Toothache and (cavity ∨ catch)) / P(toothache ∨ catch) = 0.192 / 0.416 ≈ 0.462, or <0.462, 0.538> in vector notion
 
 ------
 
 > 4. Consider two medical tests, A and B, for a virus. Test A is 95% effective at recognizing the virus when it is present, but has a 10% false positive rate (indicating that the virus is present, when it is not). Test B is 90% effective at recognizing the virus, but has a 5% false positive rate. The two tests use independent methods of identifying the virus. The virus is carried by 1% of all people. Say that a person is tested for the virus using only one of the tests, and that the test comes back positive for carrying the virus. Which test returning positive is more indicative of someone really carrying the virus? Justify your answer mathematically.
 
+From the descriptions, we could get the following information:
 
+P(virus = present) = 0.01
+
+P(A = +|virus = present) = 0.95
+
+P(A = +|virus = absent) = 0.1
+
+P(B = +|virus = present) = 0.9
+
+P(B = +|virus = absent) = 0.05
+
+We want to know which test returning positive is more indicative of someone really carrying the virus;; in other word mathematically, we want to know the values of P(virus = present|A = +) and P(virus = present|B = +).
+
+By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(virus = present|A = +) by using the equation P(A = +|virus = present) P(virus = present) / P(A = +).
+
+P(A = +) = P(virus = present) P(A = +|virus = present) + P(virus = present) P(A = +|virus = absent) = 0.01 * 0.95 + 0.99 * 0.1 = 0.1085
+
+P(virus = present|A = +) = P(A = +|virus = present) P(virus = present) / P(A = +) = 0.95 * 0.01 / 0.1085 ≈ 0.088
+
+Similarly, by Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(virus = present|B = +) by using the equation P(B = +|virus = present) P(virus = present) / P(B = +).
+
+P(B = +) = P(virus = present) P(B = +|virus = present) + P(virus = present) P(B = +|virus = absent) = 0.01 * 0.9 + 0.99 * 0.05 = 0.0585
+
+P(virus = present|B = +) = P(B = +|virus = present) P(virus = present) / P(B = +) = 0.9 * 0.01 / 0.0585 ≈ 0.154
+
+Given the facts that P(virus = present|A = +) = 0.088 and P(virus = present|B = +) = 0.154, test B returning positive is more indicative of someone really carrying the virus.
 
 ------
 
