@@ -200,11 +200,65 @@ Hence, the probability of green over blue is greater.
 
 ###### a) What is the probability that when the detector indicates the presence of an explosive device that the person is actually carrying one? Show your work?
 
+From the descriptions, we could get the following information:
 
+P(Explosive = Present) = 0.0002
+
+P(Explosive = Absent) = 0.9998
+
+P(D1 = Alarmed|Explosive = Present) = 0.99
+
+P(D1 = Unalarmed|Explosive = Present) = 0.01
+
+P(D1 = Alarmed|Explosive = Absent) = 0.05
+
+P(D1 = Unalarmed|Explosive = Absent) = 0.95
+
+We want to know the probability that when the detector indicates the presence of an explosive device that the person is actually carrying one; in other word mathematically, we want to know the value of P(Explosive = Present|D1 = Alarmed).
+
+By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(Explosive = Present|D1 = Alarmed) by using the expression P(D1 = Alarmed|Explosive = Present) P(Explosive = Present) / P(D1 = Alarmed).
+
+P(D1 = Alarmed) = P(D1 = Alarmed|Explosive = Present) P(Explosive = Present) + P(D1 = Alarmed|Explosive = Absent) P(Explosive = Absent) = 0.99 * 0.0002 + 0.05 * 0.9998 = 0.050188
+
+ P(Explosive = Present|D1 = Alarmed) = P(D1 = Alarmed|Explosive = Present) P(Explosive = Present) / P(D1 = Alarmed) = 0.99 * 0.0002 / 0.050188 ≈ 0.0039
 
 ###### b) Assume the check point security detains and inspects someone whenever the detector signals positive. On average, how many people will have to be detained and inspected for every device actually found? (Assume the security staff is always able to find an explosive if one is present.)
 
+By definition, the result required by part a is the probability that when the detector indicates the presence of an explosive device that the person, which is approximately 0.0039, or 0.39%.
 
+To get the number of people will have to be detained and inspected for every device actually found, we use the expression 1/0.0039 to calculate and get approximately 253.
+
+Another way to calculate this is to multiply the number of people need to be checked to find an explosive in average with the chance of an alarmed device and thus we get 5000 * 0.050188, which results approximately  251.
+
+Therefore, Roughly 250 people will have to be detained and inspected for every device actually found.
 
 ###### c) Now suppose you have additional equipment that gives you an independent test for the same types of devices, but it’s noisier: the false negative rate is 5% and the false positive rate is 10%. What is the probability of a device when both of them signal a detection? Show your work.
+
+P(D2 = Alarmed|Explosive = Present) = 0.95
+
+P(D2 = Unalarmed|Explosive = Present) = 0.05
+
+P(D2 = Alarmed|Explosive = Absent) = 0.1
+
+P(D2 = Unalarmed|Explosive = Absent) = 0.9
+
+We want to know the probability of a device when both of them signal a detection; in other word mathematically, we want to know the value of P(Explosive = Present|D1 = Alarmed and D2 = Alarmed).By Bayes rule, we know P(Y|X) = P(X|Y) P(Y) / P(X). Therefore, we could calculate P(Explosive = Present|D1 = Alarmed and D2 = Alarmed) by using the expression P(D1 = Alarmed and D2 = Alarmed|Explosive = Present) P(Explosive = Present) / P(D1 = Alarmed and D2 = Alarmed).
+
+P(D2 = Alarmed) = P(D2 = Alarmed|Explosive = Present) P(Explosive = Present) + P(D2 = Alarmed|Explosive = Absent) P(Explosive = Absent) = 0.95 * 0.0002 + 0.1 * 0.9998 = 0.10017
+
+Since D1 and D2 are independent tests, their joint probability can be calculated as
+
+P(D1 = Alarmed and D2 = Alarmed) = P(D1 = Alarmed) P(D2 = Alarmed) = 0.050188 * 0.10017= 0.005027
+
+Also, P(D1 = Alarmed and D2 = Alarmed|Explosive = Present) = P(D1 = Alarmed|Explosive = Present) * (D2 = Alarmed|Explosive = Present ) = 0.99 * 0.95 = 0.9405
+
+P(Explosive = Present|D1 = Alarmed and D2 = Alarmed) 
+
+= P(D1 = Alarmed and D2 = Alarmed|Explosive = Present) P(Explosive = Present) / P(D1 = Alarmed and D2 = Alarmed)
+
+= 0.9405 * 0.0002 / 0.005027
+
+= 0.03742
+
+Therefore the probability of a device when both of them signal a detection is 0.03742.
 
