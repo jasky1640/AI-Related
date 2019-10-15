@@ -1,5 +1,12 @@
 #### General Concepts in Search
 
+##### Basic Concepts
+
+- **State space**
+  - The set of all states reachable from the initial state by any sequence of actions
+- **Transition model**
+  - The result of a move
+
 ##### Uninformed search
 
 Uninformed search strategies can only distinguish goal states from non-goal states, i.e. you can’t tell when you’re getting closing. 
@@ -66,6 +73,15 @@ Nodes are selected based on an evaluation function f(n), which will help us make
     - Relative error: ε = (h* - h)/h*
     - For single goal, reversible trees: O(b<sup>Δ</sup>)
     - For constant step costs: O(b<sup>εd</sup>)
+- **Iterative deepening A* (IDA*)**
+  - Like iterative deepening, but use f(n) = g(n)+h(n) as cutoff instead of depth.
+  - Good for unit step cost problems (no priority queue), bad for real-valued costs.
+- **Recursive best-first search (RBFS)**
+  - Don’t keep whole priority queue, just use keep current path + best f-value of alternative paths of ancestors.
+  - Can switch to alternative paths if f-value is better.
+- **Simplified memory A* (SMA*)**
+  - Keep priority queue until memory limit. Drop worst leaf node, i.e. node with highest f-value.
+  - Complete if there is a reachable solution (i.e. one that fits in memory)
 
 
 
@@ -86,4 +102,120 @@ Local search problems, like 8-queens problem, do not need the path.
   - Not necessarily optimal. Could still stuck in local maximum.
 
 ![1571024816763](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1571024816763.png)
+
+
+
+#### Optimal Gameplay
+
+##### Basic Concepts
+
+- **Optimal gameplay**
+
+  - Each player tries to maximize their utility (or win the game)
+
+- **Game Tree**
+
+  - Top node is initial state
+  - Each level lists the available moves (or results) from each game state
+
+- **Zero-sum game: game**
+
+  - One player’s loss is another’s gain.
+  - Technically, total payoff of all players is  constant.
+
+- **Utility function**
+
+  - Numerical value of terminal states
+  - +1, -1, or 0 for won, loose or draw]
+
+- **Deterministic vs. Stochastic, Perfect vs. Imperfect Information**
+
+  - Deterministic, Perfect Information: chess, go
+  - Deterministic, Imperfect Information: battleship
+  - Stochastic, Perfect Information: monopoly
+  - Stochastic, Imperfect Information: poker
+
+  
+
+##### Minimax
+
+- Idea: Choose move to position (or state) with highest minimax value. Best achievable payoff against optimal player.
+- minimax-val(n) =
+  - Utility(n) if terminal state
+  - max s ∈ result(n) if n is max node
+  - min s ∈ result(n) if n is min node
+- Complete and optimal if opponent is optimal.
+- Time complexity O(b<sup>m</sup>). b = branching factor = number of legal moves. m = depth of tree
+- Space complexity O(bm) when using depth-first exploration, O(m) if generating one successor at a time.
+
+
+
+##### Alpha-beta pruning
+
+- Idea: Prune branches that can't influence final decision
+- Alpha-beta pruning keeps track of the range of possible values:
+  - α = max’s best choice (highest val.) so far at any point along path
+  - β = min’s best choice (lowest val.) so far at any point along path
+
+![1571096474304](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1571096474304.png)
+
+
+
+##### Evaluation function
+
+- Idea: Estimate expected utility based on game position evaluation function
+- Instead of using Utility of Terminal State, use heuristics at maximum cutoff depth.
+- H-Minimax(s,d) =
+  - Eval(s) if cutoff-test(s,d)
+  - max a in Actions(s) H-Minimax(Result(s,a), d+1) if Player(s) = Max
+  - min a in Actions(s) H-Minimax(Result(s,a), d+1) if Player(s) = Min
+
+
+
+#### Constraint satisfaction
+
+CSP problems are defined by the constraints:
+
+- Set d variables x<sub>i</sub> (Variables)
+- Each variable can be assigned value v<sub>j</sub> (Domain of possible values)
+- Constraint
+
+
+
+##### Backtracking Search
+
+- Choose values for one variable at a time.
+
+- Backtrack when variable has no legal values left to assign.
+
+- Equivalent to DFS but only one successor at a time.
+
+- Time complexity O(b<sup>m</sup>). Space complexity O(m).
+
+  ![1571108597849](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1571108597849.png)
+
+  - We had choices of
+    - What variable should be assigned next
+    - What order to consider the values
+  - We utilize heuristics to make these choices
+    - **Minimum Remaining Values (MRV)**: choose variable with fewest legal values
+    - **Degree** **Heuristic**: choose variable which most constrains others
+    - **Least** **Constraining** **Value**: choose value that rules out fewest choices for neighbors 
+  - **Constraint Propagation**
+    - use constraints to reduce the number of legal values of one var, which in turn (i.e. propagate to) reduce the legal values of other vars.
+    - a var is **node** **consistent** if all the values in the var’s domain satisfy the unary constraint.
+    - a var is arc consistent with regard to another var if their domains satisfy their constraint.
+
+  ![1571111363462](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1571111363462.png)
+
+  - **Forward Checking**
+    - Idea: Whenever a variable X is assigned, do forward checking from X
+      - look at each unassigned variable Y that is connected to X
+      - delete values from Y’s domain that are inconsistent with X
+
+  
+
+#### Probabilistic Reasoning and Bayes’ Rule
+
+![1571100698099](C:\Users\jasky\AppData\Roaming\Typora\typora-user-images\1571100698099.png)
 
