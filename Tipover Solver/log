@@ -1,0 +1,15 @@
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+9/07   9:00pm  1:00  read assignment and played several games to help me understand the rules.
+9/07   11:00am 2:00  wrote pseudo code and went through the data flow in the algorithm
+9/08   1:00pm  3:00  wrote all codes that passed only test 1
+9/08   4:00pm  0:30  discovered and corrected one fatal bug: accidently use shallow copy; passed test 1-9
+9/08   5:00pm  1:00  refactored the code: use in-place modification instead of deep copy
+9/09   7:00pm  2:00  fixed a fatal bug;passed large tests
+               ----
+               9:30  TOTAL time spent
+			   6:00  TOTAL time estimated
+Major Difficulties:
+1) Unfamiliar with zoo, took me a while to understand how to submit/test/unsubmit/etc...
+2) Problem with makefile

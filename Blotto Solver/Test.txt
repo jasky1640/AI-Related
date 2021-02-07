@@ -1,0 +1,251 @@
+        // Test matrix
+	    initializePureStrategyMap(10, 4);
+        List<Integer> input = new ArrayList<>();
+        input.add(4);
+        input.add(3);
+        input.add(2);
+        input.add(1);
+        double[][] res = createPointMatrix(input);
+        System.out.println("P1 strategy is " + pureStrategyMap.get(137));
+        System.out.println("P2 strategy is " + pureStrategyMap.get(138));
+        System.out.println("P1 scores " + res[137][138]);
+
+        System.out.println("P1 strategy is " + pureStrategyMap.get(138));
+        System.out.println("P2 strategy is " + pureStrategyMap.get(137));
+        System.out.println("P1 scores " + res[138][137]);
+		
+		for(double[] arr: res) {
+            for (double d : arr)
+                System.out.print(d + " ");
+            System.out.println();
+        }
+		
+		// Test hashmap
+		initializePureStrategyMap(10, 4);
+        System.out.println("size is " + pureStrategyIndexMap.size());
+        for(String str: pureStrategyIndexMap.keySet()) {
+            System.out.print("key is " + str);
+            System.out.print(" ; value is " + pureStrategyIndexMap.get(str));
+            System.out.println();
+        }
+        System.out.println("The input is 5,3,2,0, and the index is " + pureStrategyIndexMap.get("5,3,2,0"));
+        System.out.println("The input is " + pureStrategyIndexMap.get("5,3,2,0") + " , and the strategy is " + pureStrategyMap.get(pureStrategyIndexMap.get("5,3,2,0")));
+		
+		// Test hashmap        
+		initializePureStrategyMap(5, 3);
+        List<String> input = new ArrayList<>();
+        input.add("0,0,5,0.07428558119961398");
+        input.add("0,1,4,0.0628572491429189");
+        input.add("0,2,3,0.0514285583023659");
+        input.add("0,3,2,0.10857121203986661");
+        input.add("1,0,4,0.13142860782053217");
+        input.add("1,1,3,0.01714278781855886");
+        input.add("1,2,2,0.017143017862373943");
+        input.add("1,3,1,0.13142851264458152");
+        input.add("2,0,3,0.10857157877490509");
+		input.add("2,1,2,0.05142853222724512");
+		input.add("2,2,1,0.06285716721342921");
+		input.add("2,3,0,0.074285740412162");
+		input.add("3,2,0,0.10857132632298054");
+		
+        HashMap<String, Double> res = generateProbMap(input, 3);
+        for(String str: res.keySet()) {
+            System.out.print("key is " + str);
+            System.out.print(" ; value is " + res.get(str) + " ; and the index is " + pureStrategyIndexMap.get(str));
+            System.out.println();
+        }
+		
+		// Sample test 5
+		List<String> input = new ArrayList<>();
+        input.add("0,0,5,0.07428558119961398");
+        input.add("0,1,4,0.0628572491429189");
+        input.add("0,2,3,0.0514285583023659");
+        input.add("0,3,2,0.10857121203986661");
+        input.add("1,0,4,0.13142860782053217");
+        input.add("1,1,3,0.01714278781855886");
+        input.add("1,2,2,0.017143017862373943");
+        input.add("1,3,1,0.13142851264458152");
+        input.add("2,0,3,0.10857157877490509");
+        input.add("2,1,2,0.05142853222724512");
+        input.add("2,2,1,0.06285716721342921");
+        input.add("2,3,0,0.074285740412162");
+        input.add("3,2,0,0.10857132632298054");
+
+        List<Integer> input2 = new ArrayList<>();
+        input2.add(2);
+        input2.add(4);
+        input2.add(5);
+        handleVerifyMaxPoint(input, 5, input2, Math.pow(10, -5));
+		
+		// Sample test 4
+		List<String> input = new ArrayList<>();
+        input.add("0,0,5,0.07428558119961398");
+        input.add("0,1,4,0.0628572491429189");
+        input.add("0,2,3,0.0514285583023659");
+        input.add("0,3,2,0.10857121203986661");
+        input.add("1,0,4,0.13142860782053217");
+        input.add("1,1,3,0.01714278781855886");
+        input.add("1,2,2,0.017143017862373943");
+        input.add("1,3,1,0.13142851264458152");
+        input.add("2,0,3,0.10857157877490509");
+        input.add("2,1,2,0.05142853222724512");
+        input.add("2,2,1,0.06285716721342921");
+        input.add("2,3,0,0.074285740412162");
+        input.add("3,2,0,0.10857132632298054");
+
+        List<Integer> input2 = new ArrayList<>();
+        input2.add(2);
+        input2.add(4);
+        input2.add(5);
+        handleVerifyMaxWin(input, 5, input2, Math.pow(10, -6));
+		
+		// Test Matrix 3.0
+		initializePureStrategyMap(10, 4);
+        List<Integer> input = new ArrayList<>();
+        input.add(4);
+        input.add(3);
+        input.add(2);
+        input.add(1);
+        double[][] res = createWinMatrix(input);
+
+        for(double[] arr: res) {
+            for (double d : arr)
+                System.out.print(d + " ");
+            System.out.println();
+        }
+		
+		// Test linear programming
+		List<Integer> input = new ArrayList<>();
+        input.add(2);
+        input.add(4);
+        input.add(5);
+        handleFindMaxWin(5, input, Math.pow(10, -5));
+		
+		// Test linear programming        
+		List<Integer> input = new ArrayList<>();
+        input.add(1);
+        input.add(2);
+        handleFindMaxWin(4, input, Math.pow(10, -5));
+		
+		// Test linear programming        int rows = 3;
+        int cols = 3;
+        double[][] A1 = {{-0.30, -0.26, -0.28, 1, 0, 0},
+                {-0.25, -0.33, -0.30, 0, 1, 0},
+                {-0.20, -0.38, -0.33, 0, 0, 1}};
+        double[] b1 = {-1, -1, -1};
+        double[] lowerBounds = new double[rows + cols]; // auto-init to 0
+        double[] upperBounds = {5, 5, 5, 1, 1, 1};
+        double[] objective1 = {1, 1, 1, 0, 0, 0};
+        double[] res = linearProgramming(rows, A1, b1, lowerBounds, upperBounds, objective1);
+        for(double d: res)
+            System.out.println(d);
+			
+			
+	// Create the win matrix for Player 1, row = player 1 pure strategy, col = player 2 pure strategy
+    private static double[][] createWinMatrix(List<Integer> battleGround) {
+        int len = pureStrategyMap.size();
+
+        double[][] output = new double[len][len * 2];
+        for (int row = 0; row < len; row++) {
+            for (int col = row; col < len; col++) {
+                if (row == col)
+                    output[row][col] = 0.5;
+                else {
+                    double p1Score = calculateWinResult(battleGround, pureStrategyMap.get(row), pureStrategyMap.get(col));
+                    output[row][col] = p1Score;
+                    if (p1Score == 0.5) output[col][row] = 0.5;
+                    else if (p1Score == 1) output[col][row] = 0;
+                    else output[col][row] = 1;
+                }
+            }
+        }
+
+        // TODO: TRIAL
+        for (int row = 0; row < len; row++)
+            for (int col = 0; col < len; col++)
+                output[row][col] += 0.1;
+
+        for(int row = 0; row < len; row++)
+            output[row][len + row] = 1;
+
+        return output;
+    }
+	
+	// Handle the request to find mixed strategy to find max wins
+    private static void handleFindMaxWin(int unitAmount, List<Integer> battleGround, double tolerant) {
+        initializePureStrategyMap(unitAmount, battleGround.size());
+        // Amount of pure strategies
+        int rows = pureStrategyMap.size();
+        // A matrix for linear Programming method
+        double[][] winMatrix = createWinMatrix(battleGround);
+        System.out.println("size = " + winMatrix.length + " x " + winMatrix[0].length);
+        for(double[] arr: winMatrix) {
+            for (double d : arr)
+                System.out.print(d + " ");
+            System.out.println();
+        }
+
+        // b matrix for linear Programming method
+        double[] b = new double[rows];
+        Arrays.fill(b, -1);
+        System.out.println("size = " + b.length);
+        System.out.println("b");
+        for (double d : b)
+            System.out.print(d + " ");
+        System.out.println();
+
+        // lowerBounds matrix for linear Programming method
+        double[] lowerBounds = new double[rows * 2]; // auto-init to 0
+
+        System.out.println("size = " + lowerBounds.length);
+        System.out.println("LowerBounds");
+        for (double d : lowerBounds)
+            System.out.print(d + " ");
+        System.out.println();
+
+        // upperBounds matrix for linear Programming method
+        double[] upperBounds = new double[rows * 2];
+        for(int r = 0; r < rows; r++)
+            upperBounds[r] = 10;
+        for(int r = rows; r < upperBounds.length; r++)
+            upperBounds[r] = 1;
+
+        System.out.println("size = " + upperBounds.length);
+        System.out.println("UpperBounds");
+        for (double d : upperBounds)
+            System.out.print(d + " ");
+        System.out.println();
+
+        // objective matrix for linear Programming method
+        double[] objective = new double[rows * 2];
+        for(int r = 0; r < rows; r++)
+            objective[r] = 1;
+
+        System.out.println("size = " + objective.length);
+        System.out.println("Objective");
+        for (double d : objective)
+            System.out.print(d + " ");
+        System.out.println();
+
+        double[] strategy = linearProgramming(rows, winMatrix, b, lowerBounds, upperBounds, objective);
+        for(double d: strategy)
+            System.out.println(d);
+    }
+	
+	// Test        
+	initializePureStrategyMap(4,2);
+        List<Integer> input = new ArrayList<>();
+        input.add(1);
+        input.add(2);
+        for(double[] arr: createPointMatrix(input)) {
+            for (double d : arr)
+                System.out.print(d + " ");
+            System.out.println();
+        }
+
+        System.out.println("And");
+        for(double[] arr: demo(input)) {
+            for (double d : arr)
+                System.out.print(d + " ");
+            System.out.println();
+        }

@@ -1,0 +1,16 @@
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+9/23   9:00pm  3:00  read assignment and played several games to help me understand the rules
+9/24   1:00am  1:00  wrote pseudo code and went through the data flow in the algorithm
+9/24   2:00am  2:00  start to implemenet helper methods
+9/24   11:00am 1:30  finish implementing player 2's methods
+9/24   5:00pm  2:00  optimize the running time by initializing maps to avoid redundant calculation
+9/24   7:00pm  5:00  finish implementing player 1's methods, testing with the given tests, and implementing user input part
+               ----
+               15:00  TOTAL time spent
+			   10:00  TOTAL time estimated
+Major Difficulties:
+1) Understand the math formula of win rate for player 1 and player 2
+2) Implement the math formula in the code
+3) Keep the running time under 5 seconds

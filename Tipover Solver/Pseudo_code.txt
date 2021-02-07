@@ -1,0 +1,35 @@
+// curr_row and curr_col represents the current position, board represents the current game status
+// path stores the tipover path, visited stores the visited coordiante
+List<String> find_solution(int curr_row, int curr_col, int[][] board, List<String> path, HashMap<String, Integer> visited) {
+	// Base case 1: this base case could be addressed before passing to the function instead
+	if we are standing in lava
+		return null
+
+	// Base case 2: goal state
+	if the current position is final position
+		return path;
+	
+	// Mark the current coordinate as visited for this particular board
+	Add current coordinate to visited
+
+	// First we explore all possible moves (not tipover), which is up/down/left/right
+	// A legal move is 1) not visited, 2) in boundary, and 3) not walking into lava
+	for every legal move at current location 
+		// We only need to update current position
+		List<String> res = find_solution(new_row, new_col, board, path, visited)
+		// We find a solution!
+		if res is not null, then return path
+	
+	// Second we explore all possible tipover, which could be tip to up/down/left/right
+	// A legal tipover is 1)in boundary and 2) no other blocks in the path
+	for every legal tipover at current location
+		create int[][] new_board that reflects the change
+		update the new tipover to the path
+		// We need to update current position as well and a new hashmap to record visited coordinate
+		List<String> res = find_solution(new_row, new_col, new_board, path, new HashMap())
+		// We find a solution!
+		if res is not null, then return path
+
+	// If we reach here, it means this is a dead end
+	return null;
+}
